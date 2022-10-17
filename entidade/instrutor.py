@@ -16,5 +16,5 @@ class Instrutor(Pessoa):
         return self.__cref
 
     @property
-    def alunos(self) -> str:
+    def alunos(self) -> list:
         return self.__alunos
