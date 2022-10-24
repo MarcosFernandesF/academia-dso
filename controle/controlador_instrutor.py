@@ -37,7 +37,7 @@ class ControladorInstrutor():
             self.__tela_instrutor.mostra_mensagem("ATENÇÃO: Instrutor não existente")
 
     def excluir_instrutor(self):
-        self.__lista_instrutores()
+        self.lista_instrutores()
         cpf_instrutor = self.__tela_instrutor.seleciona_instrutor()
         instrutor = self.pega_instrutor_por_cpf(cpf_instrutor)
 
@@ -54,6 +54,46 @@ class ControladorInstrutor():
             for instrutor in self.__instrutores:
                 #Fazer tratamento de dados aqui ou em "mostra_instrutor"?
                 self.__tela_instrutor.mostra_instrutor({"nome": instrutor.nome, "sexo": instrutor.sexo, "cpf": instrutor.cpf, "cref": instrutor.cref})
+
+    def vincular_aluno(self):
+        controlador_aluno = self.__controlador_sistema.controlador_aluno()
+
+        self.__tela_instrutor.mostra_mensagem("Para qual instrutor deseja vincular um aluno?")
+        self.lista_instrutores()
+        cpf_instrutor = self.__tela_instrutor.seleciona_instrutor()
+        instrutor = self.pega_instrutor_por_cpf(cpf_instrutor)
+        if (instrutor is None):
+            self.__tela_instrutor.mostra_mensagem("Instrutor não existe!")
+        else:
+            self.__tela_instrutor.mostra_mensagem("Qual aluno deseja vincular? ")
+            controlador_aluno.lista_alunos()
+            cpf_aluno = self.__tela_instrutor.seleciona_aluno()
+            aluno = controlador_aluno.pega_aluno_por_cpf(cpf_aluno)
+            if(aluno is None):
+                self.__tela_instrutor.mostra_mensagem("Aluno não existe!")
+            else:
+                lista_de_alunos = instrutor.alunos()
+                lista_de_alunos.append(aluno)
+
+    def desvincular_aluno(self):
+        controlador_aluno = self.__controlador_sistema.controlador_aluno()
+
+        self.__tela_instrutor.mostra_mensagem("Para qual instrutor deseja desvincular um aluno?")
+        self.lista_instrutores()
+        cpf_instrutor = self.__tela_instrutor.seleciona_instrutor()
+        instrutor = self.pega_instrutor_por_cpf(cpf_instrutor)
+        if (instrutor is None):
+            self.__tela_instrutor.mostra_mensagem("Instrutor não existe!")
+        else:
+            self.__tela_instrutor.mostra("Qual aluno deseja desvincular? ")
+            controlador_aluno.lista_alunos()
+            cpf_aluno = self.__tela_instrutor.seleciona_aluno()
+            aluno = controlador_aluno.pega_aluno_por_cpf(cpf_aluno)
+            if(aluno is None):
+                self.__tela_instrutor.mostra_mensagem("Aluno não existe!")
+            else:
+                lista_de_alunos = instrutor.alunos()
+                lista_de_alunos.remove(aluno)
 
     def retornar(self):
         self.__controlador_sistema.abre_tela()

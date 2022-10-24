@@ -1,5 +1,9 @@
+from tela import Tela
 
-class TelaInstrutor():
+class TelaInstrutor(Tela):
+
+    def __init__(self):
+        super().__init__()
 
     def tela_opcoes(self):
         print("------------- INSTRUTOR -------------")
@@ -38,7 +42,8 @@ class TelaInstrutor():
         cpf = input("CPF do instrutor que deseja selecionar: ")
         return cpf
 
-    def mostra_mensagem(self, mensagem):
-        print(mensagem)
-
+    ##Metodos Abstratos
+    def seleciona_aluno(self):
+        cpf = input("CPF do aluno que deseja selecionar: ")
+        return cpf
     
