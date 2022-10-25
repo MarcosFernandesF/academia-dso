@@ -1,4 +1,4 @@
-from tela import Tela
+from limite.tela import Tela
 
 class TelaInstrutor(Tela):
 

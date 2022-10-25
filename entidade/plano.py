@@ -1,4 +1,4 @@
-from aluno import Aluno
+#from entidade.aluno import Aluno
 
 class Plano():
     def __init__(self, nome: str, duracao: str, preco: float, codigo: int):

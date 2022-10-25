@@ -1,6 +1,6 @@
 from time import strftime
-from pessoa import Pessoa
-from aluno import Aluno
+from entidade.pessoa import Pessoa
+from entidade.aluno import Aluno
 
 class Instrutor(Pessoa):
     def __init__(self, nome: str, sexo: str, cpf: str, cref: str):
