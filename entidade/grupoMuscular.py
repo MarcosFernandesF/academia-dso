@@ -1,4 +1,4 @@
-from exercicio import Exercicio
+#importtar exercicio
 
 class GrupoMuscular:
     def __init__(self, nome: str):
