@@ -1,5 +1,4 @@
-from exercicio import Exercicio
-
+#Importar exercicio
 
 class Aparelho:
     def __init__(self, nome: str):
