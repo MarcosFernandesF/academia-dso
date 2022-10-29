@@ -1,7 +1,7 @@
 class TelaAparelho():
 
     def mostra_tela_opcoes(self):
-        print("<--------- MENU APARELHOS --------->")
+        print("\n<--------- MENU APARELHOS --------->")
         print("1 - Listar aparelhos")
         print("0 - Voltar")
 

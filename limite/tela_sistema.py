@@ -1,7 +1,7 @@
 class TelaSistema:
 
     def mostra_tela_opcoes(self):
-        print("<---------- MENU PRINCIPAL --------- >")
+        print("\n<---------- MENU PRINCIPAL --------- >")
         print("Escolha sua opção:")
         print("1 - Aluno")
         print("2 - Instrutor")
