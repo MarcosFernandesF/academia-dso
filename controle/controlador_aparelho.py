@@ -3,21 +3,26 @@ from entidade.aparelho import Aparelho
 
 class ControladorAparelhos():
 
-    def __init__(self):
+    def __init__(self, controlador_sistema):
         self.__tela_aparelhos = TelaAparelho()
+        self.__controlador_sistema = controlador_sistema
         self.__aparelhos = []
 
     def inicial(self):
         self.abre_tela_inicial()
 
-    def criar_grupoMuscular(nome: str):
-        pass
+    def criar_aparelho(self, nome: str):
+        aparelho = Aparelho(f"{nome}")
+        self.__aparelhos.append(aparelho)
 
     def listar_aparelhos(self):
-        pass
+        print("\nAparelhos cadastrados:")
+        for aparelhos in self.__aparelhos:
+            print (aparelhos)
+        print("")
 
     def finalizar(self):
-        pass
+        self.__controlador_sistema.abre_tela_inicial()
 
     def abre_tela_inicial(self):
         switcher = {
@@ -25,6 +30,6 @@ class ControladorAparelhos():
             }
 
         while True:
-            opcao = self.__tela_aparelho.mostra_tela_opcoes()
+            opcao = self.__tela_aparelhos.mostra_tela_opcoes()
             funcao_escolhida = switcher[opcao]
             funcao_escolhida()

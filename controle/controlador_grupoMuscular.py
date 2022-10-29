@@ -3,15 +3,16 @@ from entidade.grupoMuscular import GrupoMuscular
 
 class ControladorGrupoMuscular():
 
-    def __init__(self):
+    def __init__(self, controlador_sistema):
         self.__tela_grupoMuscular = TelaGrupoMuscular()
-        self.__grupomuscular = {}
+        self.__gruposmusculares = {}
+        self.__controlador_sistema = controlador_sistema
 
     def inicial(self):
         self.abre_tela_inicial()
 
-    def criar_grupoMuscular(nome: str):
-        pass
+    def criar_grupoMuscular(self, nome: str):
+        self.__gruposmusculares.keys(nome) #verificar se metodo keys esta correto
 
     def adicionar_exercicio(self):
         print("adicionando")
@@ -23,7 +24,7 @@ class ControladorGrupoMuscular():
         pass
 
     def finalizar(self):
-        pass
+        self.__controlador_sistema.abre_tela_inicial()
 
     def abre_tela_inicial(self):
         switcher = {
