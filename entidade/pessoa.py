@@ -8,7 +8,7 @@ class Pessoa(ABC):
             self.__sexo = sexo
             self.__cpf = cpf
         else:
-            raise ... ##Criar exceção
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
     
     @property
     def nome(self) -> str:
@@ -19,7 +19,7 @@ class Pessoa(ABC):
         if isinstance(nome, str):
             self.__nome = nome
         else:
-            raise ... ##Criar exceção
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
 
     @property
     def sexo(self) -> str:
@@ -30,7 +30,7 @@ class Pessoa(ABC):
         if isinstance(sexo, str):
             self.__sexo = sexo
         else:
-            raise ...
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
 
     @property
     def cpf(self) -> str:
@@ -41,6 +41,6 @@ class Pessoa(ABC):
         if isinstance(cpf, str):
             self.__cpf = cpf
         else:
-            raise ...
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
 
     

@@ -7,7 +7,7 @@ class Aluno(Pessoa):
         if isinstance(plano, Plano):
             self.__plano = plano
         else:
-            raise ... ##Criar exceção
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
         
     @property
     def plano(self) -> str:
@@ -15,5 +15,8 @@ class Aluno(Pessoa):
 
     @plano.setter
     def plano(self, plano):
-        self.__plano = plano
+        if isinstance(plano, Plano):
+            self.__plano = plano
+        else:
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
 
