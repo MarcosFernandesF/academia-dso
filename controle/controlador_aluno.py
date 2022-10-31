@@ -25,33 +25,47 @@ class ControladorAluno():
             plano = lista_de_planos[2]
             return plano
 
-
     def pega_aluno_por_cpf(self, cpf: str):
         for aluno in self.__alunos:
             if(aluno.cpf == cpf):
                 return aluno
-        return None
+        else:
+            raise ValueError(">>>Ocorreu uma exceção ValueError")
 
-    #Fazer tratamento dos dados no "pega_dados_instrutor"
     def incluir_aluno(self):
-        controlador_plano = self.__controlador_sistema.controlador_plano
-        lista_de_planos = controlador_plano.planos
+        try:
+            controlador_plano = self.__controlador_sistema.controlador_plano
+            lista_de_planos = controlador_plano.planos
 
-        dados_aluno = self.__tela_aluno.pega_dados_aluno()
+            dados_aluno = self.__tela_aluno.pega_dados_aluno()
 
-        dados_aluno["plano"] = self.verifica_plano(lista_de_planos, dados_aluno)
+            dados_aluno["plano"] = self.verifica_plano(lista_de_planos, dados_aluno)
 
-        aluno = Aluno(dados_aluno["nome"], dados_aluno["sexo"], dados_aluno["cpf"], dados_aluno["plano"])
-        self.__alunos.append(aluno)
+            for aluno in self.__alunos:
+                if dados_aluno["cpf"] == aluno.cpf:
+                    self.__tela_aluno.mostra_mensagem("Já existe um aluno com este CPF!\n")
+                    break
+            else:
+                aluno = Aluno(dados_aluno["nome"], dados_aluno["sexo"], dados_aluno["cpf"], dados_aluno["plano"])
+                self.__alunos.append(aluno)
+                self.__tela_aluno.mostra_mensagem("Aluno cadastrado com sucesso!\n")
+
+        except TypeError as e:
+            self.__tela_aluno.mostra_mensagem(e)
+            self.__tela_aluno.mostra_mensagem(">>>Alguma das entradas estão com o tipo diferente do que deveriam estar!")          
+            self.__tela_aluno.mostra_mensagem(">>>nome[str], sexo[str], cpf[str]\n")
+        except ValueError as e:
+            self.__tela_aluno.mostra_mensagem(e)
+            self.__tela_aluno.mostra_mensagem(">>>A entrada 'Sexo' ou o 'Plano' foram escritos de maneira errada!")          
+            self.__tela_aluno.mostra_mensagem(">>>Maneira Correta: Masculino / Feminino")
+            self.__tela_aluno.mostra_mensagem(">>>Maneira Correta: Mensal / Semestral / Anual\n")
 
     def alterar_aluno(self):
-        if (self.lista_alunos()) is not None:
-            cpf_aluno = self.__tela_aluno.seleciona_aluno()
-            aluno = self.pega_aluno_por_cpf(cpf_aluno)
+        try:
+            if (self.lista_alunos()) is not None:
+                cpf_aluno = self.__tela_aluno.seleciona_aluno()
+                aluno = self.pega_aluno_por_cpf(cpf_aluno)
 
-            #Utilizar exception aqui ou nao?
-            #Utilizar raise no retorno de "pega_instrutuor_por_cpf"?
-            if (aluno is not None):
                 novos_dados_aluno = self.__tela_aluno.pega_dados_aluno()
                 lista_de_planos = self.__controlador_sistema.controlador_plano.planos
 
@@ -61,19 +75,24 @@ class ControladorAluno():
                 aluno.sexo = novos_dados_aluno["sexo"]
                 aluno.cpf = novos_dados_aluno["cpf"]
                 aluno.plano = novos_dados_aluno["plano"]
-            else:
-                self.__tela_aluno.mostra_mensagem("ATENÇÃO: Não há aluno com este CPF!\n")
+
+        except ValueError as e:
+            self.__tela_aluno.mostra_mensagem(e)
+            self.__tela_aluno.mostra_mensagem(">>>Entrada Inválida!")          
+            self.__tela_aluno.mostra_mensagem(">>>Escreva a entrada de maneira correta!\n")
 
     def excluir_aluno(self):
-        if (self.lista_alunos()) is not None:
-            cpf_aluno = self.__tela_aluno.seleciona_aluno()
-            aluno = self.pega_aluno_por_cpf(cpf_aluno)
+        try:
+            if (self.lista_alunos()) is not None:
+                cpf_aluno = self.__tela_aluno.seleciona_aluno()
+                aluno = self.pega_aluno_por_cpf(cpf_aluno)
 
-            if(aluno is not None):
                 self.__alunos.remove(aluno)
                 self.__tela_aluno.mostra_mensagem("Aluno removido com sucesso! \n")
-            else:
-                self.__tela_aluno.mostra_mensagem("ATENÇÃO: Não há aluno com este CPF!\n")
+
+        except ValueError as e:
+            self.__tela_aluno.mostra_mensagem(e)
+            self.__tela_aluno.mostra_mensagem(">>>Não há nenhum instrutor com este CPF!\n") 
 
     def lista_alunos(self):
         if len(self.__alunos) == 0:
@@ -82,7 +101,7 @@ class ControladorAluno():
         else:
             self.__tela_aluno.mostra_mensagem("---------- LISTA DE ALUNOS ----------")
             for aluno in self.__alunos:
-                #Fazer tratamento de dados aqui ou em "mostra_aluno"?
+                #Não fiz o tratamento aqui pois se estivesse errado ele não passario do "pega_dados_aluno"
                 self.__tela_aluno.mostra_aluno({"nome": aluno.nome, "sexo": aluno.sexo, "cpf": aluno.cpf, "plano": aluno.plano})
             return True
 
@@ -93,4 +112,8 @@ class ControladorAluno():
         lista_opcoes = {1: self.incluir_aluno, 2: self.alterar_aluno, 3: self.lista_alunos, 4: self.excluir_aluno, 0: self.retornar}
 
         while (True):
-            lista_opcoes[self.__tela_aluno.tela_opcoes()]()
+            try:
+                lista_opcoes[self.__tela_aluno.tela_opcoes()]()
+            except ValueError as e:
+                self.__tela_aluno.mostra_mensagem(e)
+                self.__tela_aluno.mostra_mensagem(">>>O valor digitado não corresponde as opções\n")
