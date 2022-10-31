@@ -44,20 +44,27 @@ class ControladorSistema():
 
     def tela_aparelhos(self):
         self.__controlador_aparelhos.abre_tela_inicial()
-    
+
+    def instacia_grupo_muscular(self):
+        grupo_um = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo um")
+        grupo_um = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo dois")
+        grupo_um = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo três")
+        grupo_um = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo quatro")
+        grupo_um = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo cinco")
+
     def instancia_aparelhos(self):
         aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho um", "1")
-        aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho dois", "2")
-        aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho três", "3")
-        aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho quatro", "4")
-        aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho cinco", "5")
+        aparelho_dois = self.__controlador_aparelhos.criar_aparelho("Aparelho dois", "2")
+        aparelho_tres = self.__controlador_aparelhos.criar_aparelho("Aparelho três", "3")
+        aparelho_quatro = self.__controlador_aparelhos.criar_aparelho("Aparelho quatro", "4")
+        aparelho_cinco = self.__controlador_aparelhos.criar_aparelho("Aparelho cinco", "5")
 
     def tela_exercicio(self):
         self.__controlador_exercicio.abre_tela_inicial()
 
     def abre_tela_inicial(self):
         lista_opcoes = {
-            3: self.cadastra_grupoMuscular, 5: self.tela_aparelhos
+            3: self.cadastra_grupoMuscular, 5: self.tela_aparelhos, 6:self.tela_exercicio
         }
 
         while True:
@@ -84,4 +91,8 @@ class ControladorSistema():
     @property
     def controlador_plano(self):
         return self.__controlador_plano
+
+    @property
+    def controlador_exercicio(self):
+        return self.__controlador_exercicio
 

@@ -69,3 +69,7 @@ class ControladorExercicio():
             opcao = self.__tela_exercicio.mostra_tela_opcoes()
             funcao_escolhida = switcher[opcao]
             funcao_escolhida()
+
+    @property
+    def exercicios(self):
+        return self.__exercicios
