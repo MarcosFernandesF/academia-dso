@@ -15,19 +15,25 @@ class TelaInstrutor(Tela):
         print("5 - Vincular Aluno")
         print("6 - Desvincular Aluno")
         print("7 - Listar Alunos Vinculados")
+        print("0 - Voltar")
 
         opcao = int(input("Digite a opção: "))
+        print("")
         return opcao
     
     #Fazer o tratamento de dados aqui, caso a entrada seja diferente do esperado
     def pega_dados_instrutor(self):
         print("--------- DADOS INSTRUTOR ---------")
         nome = input("Nome: ")
-        sexo = input("Sexo: ")
+        sexo = input("Sexo[Masculino/Feminino]: ")
         cref = input("CREF: ")
         cpf = input("CPF: ")
+        print("")
 
-        return {"nome": nome, "sexo": sexo, "cref": cref, "cpf": cpf}
+        if sexo == "Masculino" or sexo == "Feminino":
+            return {"nome": nome, "sexo": sexo, "cref": cref, "cpf": cpf}
+        else:
+            raise ...
 
     #Fazer o tratamento de dados aqui, caso a enrada seja diferente do esperado
     def mostra_instrutor(self, dados_instrutor):
@@ -35,15 +41,17 @@ class TelaInstrutor(Tela):
         print("Sexo do Instrutor: ", dados_instrutor["sexo"])
         print("CREF do Instrutor: ", dados_instrutor["cref"])
         print("CPF do Instrutor: ", dados_instrutor["cpf"])
-        print("\n")
+        print("")
 
     #Fazer o tratamento de dados aqui, caso a enrada seja diferente do esperado
     def seleciona_instrutor(self):
         cpf = input("CPF do instrutor que deseja selecionar: ")
+        print("")
         return cpf
 
     ##Metodos Abstratos
     def seleciona_aluno(self):
         cpf = input("CPF do aluno que deseja selecionar: ")
+        print("")
         return cpf
     

@@ -6,9 +6,10 @@ class TelaSistema:
         print("1 - Aluno")
         print("2 - Instrutor")
         print("3 - Grupo Muscular")
-        print("4 - Plano")
+        print("4 - Planos")
         print("5 - Aparelho")
         print("6 - Exercicio")
         print("7 - Treino")
         opcao = int(input("Escolha a opção: "))
+        print("")
         return opcao
