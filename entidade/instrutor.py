@@ -1,4 +1,3 @@
-from time import strftime
 from entidade.pessoa import Pessoa
 from entidade.aluno import Aluno
 
@@ -26,5 +25,9 @@ class Instrutor(Pessoa):
     @property
     def alunos(self) -> list:
         return self.__alunos
+
+    @alunos.setter
+    def alunos(self, aluno):
+        self.__alunos.append(aluno)
 
     
