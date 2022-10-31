@@ -12,3 +12,8 @@ class Aluno(Pessoa):
     @property
     def plano(self) -> str:
         return self.__plano
+
+    @plano.setter
+    def plano(self, plano):
+        self.__plano = plano
+

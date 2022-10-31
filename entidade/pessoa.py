@@ -3,14 +3,13 @@ from abc import ABC, abstractmethod
 class Pessoa(ABC):
     @abstractmethod
     def __init__(self, nome: str, sexo: str, cpf: str):
-        if isinstance(nome, sexo, cpf, str):
+        if isinstance(nome, str) and isinstance(sexo, str) and isinstance(cpf, str):
             self.__nome = nome
             self.__sexo = sexo
             self.__cpf = cpf
         else:
             raise ... ##Criar exceção
     
-    ##Por enquanto só setter para o nome
     @property
     def nome(self) -> str:
         return self.__nome
@@ -26,8 +25,22 @@ class Pessoa(ABC):
     def sexo(self) -> str:
         return self.__sexo
 
+    @sexo.setter
+    def sexo(self, sexo):
+        if isinstance(sexo, str):
+            self.__sexo = sexo
+        else:
+            raise ...
+
     @property
     def cpf(self) -> str:
         return self.__cpf
+
+    @cpf.setter
+    def cpf(self, cpf):
+        if isinstance(cpf, str):
+            self.__cpf = cpf
+        else:
+            raise ...
 
     

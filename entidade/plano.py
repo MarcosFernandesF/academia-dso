@@ -2,7 +2,7 @@
 
 class Plano():
     def __init__(self, nome: str, duracao: str, preco: float, codigo: int):
-        if isinstance(nome, duracao, str) and isinstance(preco, float) and isinstance(codigo, int):
+        if isinstance(nome, str) and isinstance(duracao, str) and isinstance(preco, float) and isinstance(codigo, int):
             self.__nome = nome
             self.__duracao = duracao
             self.__preco = preco
