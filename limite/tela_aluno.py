@@ -16,6 +16,10 @@ class TelaAluno(Tela):
 
         opcao = int(input("Digite a opção: "))
         print("")
+
+        if opcao != 1 and opcao != 2 and opcao != 3 and opcao != 4 and opcao != 0:
+            raise ValueError(">>>Ocorreu uma exceção ValueError")
+            
         return opcao
 
     def mostra_aluno(self, dados_aluno):
@@ -25,7 +29,6 @@ class TelaAluno(Tela):
         print("Plano: ",dados_aluno["plano"].nome)
         print("")
 
-    #Fazer o tratamento de dados aqui, caso a entrada seja diferente do esperado
     def pega_dados_aluno(self):
         print("--------- DADOS ALUNO ---------")
         nome = input("Nome: ")
@@ -34,8 +37,11 @@ class TelaAluno(Tela):
         plano = input("Plano[Mensal, Semestral, Anual]: ")
         print("")
 
-        if sexo == "Masculino" or sexo == "Feminino" or plano == "Mensal" or plano == "Semestral" or plano == "Anual":
-            return {"nome": nome, "sexo": sexo, "cpf": cpf, "plano": plano}
+        if isinstance(nome, str) and isinstance(sexo, str) and isinstance(cpf, str):
+            if (sexo == "Masculino" or sexo == "Feminino") and (plano == "Mensal" or plano == "Semestral" or plano == "Anual"):
+                return {"nome": nome, "sexo": sexo, "cpf": cpf, "plano": plano}
+            else:
+                raise ValueError(">>>Ocorreu uma exceção ValueError")
         else:
-            raise ...
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
         

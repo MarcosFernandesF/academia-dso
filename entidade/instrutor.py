@@ -7,7 +7,7 @@ class Instrutor(Pessoa):
         if isinstance(cref, str):
             self.__cref = cref
         else:
-            raise ... #Criar exceção
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
 
         self.__alunos = []
 
@@ -20,7 +20,7 @@ class Instrutor(Pessoa):
         if isinstance(cref, str):
             self.__cref = cref
         else:
-            raise ...
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
 
     @property
     def alunos(self) -> list:
@@ -28,6 +28,9 @@ class Instrutor(Pessoa):
 
     @alunos.setter
     def alunos(self, aluno):
-        self.__alunos.append(aluno)
+        if isinstance(aluno, Aluno):
+            self.__alunos.append(aluno)
+        else:
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
 
     

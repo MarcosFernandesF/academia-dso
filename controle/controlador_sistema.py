@@ -21,13 +21,13 @@ class ControladorSistema():
         self.abre_tela_inicial()
 
     def instancia_planos(self):
-        plano_mensal = self.__controlador_plano.cria_plano("Plano Mensal", "1 Mês", 119.90, 1)
+        plano_mensal = self.__controlador_plano.cria_plano("Plano Mensal", "1 Mês", 119.90)
         self.__controlador_plano.planos = plano_mensal
 
-        plano_semestral = self.__controlador_plano.cria_plano("Plano Semestral", "6 Meses", 109.90, 2)
+        plano_semestral = self.__controlador_plano.cria_plano("Plano Semestral", "6 Meses", 109.90)
         self.__controlador_plano.planos = plano_semestral
 
-        plano_anual = self.__controlador_plano.cria_plano("Plano Anual", "12 Meses", 99.90, 3)
+        plano_anual = self.__controlador_plano.cria_plano("Plano Anual", "12 Meses", 99.90)
         self.__controlador_plano.planos = plano_anual
 
     def cadastra_alunos(self):
@@ -40,7 +40,7 @@ class ControladorSistema():
         self.__controlador_grupoMuscular.abre_tela_inicial()
     
     def mostra_planos(self):
-        pass
+        self.__controlador_plano.lista_planos()
 
     def tela_aparelhos(self):
         self.__controlador_aparelhos.abre_tela_inicial()
@@ -64,13 +64,25 @@ class ControladorSistema():
 
     def abre_tela_inicial(self):
         lista_opcoes = {
-            3: self.cadastra_grupoMuscular, 5: self.tela_aparelhos, 6:self.tela_exercicio
+            1: self.cadastra_alunos,
+            2: self.cadastra_instrutor,
+            3: self.cadastra_grupoMuscular,
+            4: self.mostra_planos,
+            5: self.tela_aparelhos,
+            0: self.encerra_sistema
         }
 
         while True:
-            opcao = self.__tela_sistema.mostra_tela_opcoes()
-            funcao_escolhida = lista_opcoes[opcao]
-            funcao_escolhida()
+            try:
+                opcao = self.__tela_sistema.mostra_tela_opcoes()
+                funcao_escolhida = lista_opcoes[opcao]
+                funcao_escolhida()
+            except ValueError as e:
+                self.__tela_sistema.mostra_mensagem(e)
+                self.__tela_sistema.mostra_mensagem(">>>O valor digitado não corresponde as opções\n")
+    
+    def encerra_sistema(self):
+        exit(0)
 
     @property
     def controlador_instrutor(self):
