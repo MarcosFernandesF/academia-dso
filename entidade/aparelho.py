@@ -1,9 +1,11 @@
 #Importar exercicio
 
 class Aparelho:
-    def __init__(self, nome: str):
+    def __init__(self, nome: str, id: str):
         if isinstance(nome, str):
             self.__nome = nome
+        if isinstance(id, str):
+            self.__id = id
         self.__exercicios = []
 
     @property
@@ -13,3 +15,7 @@ class Aparelho:
     @property
     def exercicios(self) -> list:
         return self.__exercicios
+
+    @property
+    def id(self) -> str:
+        return self.__id

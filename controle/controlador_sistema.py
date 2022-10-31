@@ -2,8 +2,7 @@ from limite.tela_sistema import TelaSistema
 from controle.controlador_grupoMuscular import ControladorGrupoMuscular
 from controle.controlador_instrutor import ControladorInstrutor
 from controle.controlador_aparelho import ControladorAparelhos
-from controle.controlador_aluno import ControladorAluno
-from controle.controlador_plano import ControladorPlano
+#from controle.controlador_aluno import ControladorAluno
 
 class ControladorSistema():
 
@@ -11,6 +10,7 @@ class ControladorSistema():
         self.__tela_sistema = TelaSistema()
         self.__controlador_grupoMuscular = ControladorGrupoMuscular(self)
         self.__controlador_aparelhos = ControladorAparelhos(self)
+        self.__controlador_exercicio = ControladorExercicio(self)
         self.__controlador_instrutor = ControladorInstrutor(self)
         self.__controlador_aluno = ControladorAluno(self)
         self.__controlador_plano = ControladorPlano(self)
@@ -42,14 +42,20 @@ class ControladorSistema():
 
     def tela_aparelhos(self):
         self.__controlador_aparelhos.abre_tela_inicial()
+    
+    def instancia_aparelhos(self):
+        aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho um", "1")
+        aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho dois", "2")
+        aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho três", "3")
+        aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho quatro", "4")
+        aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho cinco", "5")
+
+    def tela_exercicio(self):
+        self.__controlador_exercicio.abre_tela_inicial()
 
     def abre_tela_inicial(self):
         lista_opcoes = {
-            1: self.cadastra_alunos,
-            2: self.cadastra_instrutor,
-            3: self.cadastra_grupoMuscular,
-            4: self.mostra_planos,
-            5: self.tela_aparelhos
+            3: self.cadastra_grupoMuscular, 5: self.tela_aparelhos
         }
 
         while True:
@@ -71,7 +77,7 @@ class ControladorSistema():
 
     @property
     def controlador_aparelho(self):
-        return self.__controlador_aparelho
+        return self.__controlador_aparelhos
 
     @property
     def controlador_plano(self):
