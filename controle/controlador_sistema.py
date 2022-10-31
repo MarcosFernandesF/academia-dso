@@ -1,9 +1,11 @@
+from limite import tela_treino
 from limite.tela_sistema import TelaSistema
 from controle.controlador_grupoMuscular import ControladorGrupoMuscular
 from controle.controlador_instrutor import ControladorInstrutor
 from controle.controlador_aparelho import ControladorAparelhos
 from controle.controlador_aluno import ControladorAluno
 from controle.controlador_plano import ControladorPlano
+from controle.controlador_treino import ControladorTreino
 from controle.controlador_exercicio import ControladorExercicio
 
 class ControladorSistema():
@@ -15,6 +17,7 @@ class ControladorSistema():
         self.__controlador_exercicio = ControladorExercicio(self)
         self.__controlador_instrutor = ControladorInstrutor(self)
         self.__controlador_aluno = ControladorAluno(self)
+        self.__controlador_treino = ControladorTreino(self)
         self.__controlador_plano = ControladorPlano(self)
 
     def inicia(self):
@@ -59,12 +62,18 @@ class ControladorSistema():
         aparelho_quatro = self.__controlador_aparelhos.criar_aparelho("Aparelho quatro", "4")
         aparelho_cinco = self.__controlador_aparelhos.criar_aparelho("Aparelho cinco", "5")
 
+    def instancia_treino(self):
+        treino = self.__controlador_treino.criar_treino()
+
     def tela_exercicio(self):
         self.__controlador_exercicio.abre_tela_inicial()
+    
+    def tela_treino(self):
+        self.__controlador_treino.abre_tela_inicial()
 
     def abre_tela_inicial(self):
         lista_opcoes = {
-            3: self.cadastra_grupoMuscular, 5: self.tela_aparelhos, 6:self.tela_exercicio
+            3: self.cadastra_grupoMuscular, 5: self.tela_aparelhos, 6:self.tela_exercicio, 7:self.tela_treino
         }
 
         while True:

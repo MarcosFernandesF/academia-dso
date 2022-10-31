@@ -13,6 +13,12 @@ class ControladorInstrutor():
             if(instrutor.cpf == cpf):
                 return instrutor
         return None
+    
+    def pega_instrutor_por_cref(self, cref: str):
+        for instrutor in self.__instrutores:
+            if(instrutor.cref == cref):
+                return instrutor
+        return None
 
     #Fazer tratamento dos dados no "pega_dados_instrutor"
     def incluir_instrutor(self):
