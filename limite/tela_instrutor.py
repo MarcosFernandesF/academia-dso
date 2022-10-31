@@ -19,6 +19,10 @@ class TelaInstrutor(Tela):
 
         opcao = int(input("Digite a opção: "))
         print("")
+
+        if opcao != 1 and opcao != 2 and opcao != 3 and opcao != 4 and opcao != 5 and opcao != 6 and opcao != 7 and opcao != 0:
+            raise ValueError(">>>Ocorreu uma exceção ValueError")
+
         return opcao
     
     #Fazer o tratamento de dados aqui, caso a entrada seja diferente do esperado
@@ -30,10 +34,13 @@ class TelaInstrutor(Tela):
         cpf = input("CPF: ")
         print("")
 
-        if sexo == "Masculino" or sexo == "Feminino":
-            return {"nome": nome, "sexo": sexo, "cref": cref, "cpf": cpf}
+        if isinstance(nome, str) and isinstance(sexo, str) and isinstance(cref, str) and isinstance(cpf, str):
+            if sexo == "Masculino" or sexo == "Feminino":
+                return {"nome": nome, "sexo": sexo, "cref": cref, "cpf": cpf}
+            else:
+                raise ValueError(">>>Ocorreu uma exceção ValueError")
         else:
-            raise ...
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
 
     #Fazer o tratamento de dados aqui, caso a enrada seja diferente do esperado
     def mostra_instrutor(self, dados_instrutor):

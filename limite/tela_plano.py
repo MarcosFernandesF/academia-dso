@@ -8,5 +8,4 @@ class TelaPlano(Tela):
         print("Nome: ", dados_plano["nome"])
         print("Duracao: ", dados_plano["duracao"])
         print("Preço: ", dados_plano["preco"])
-        print("Codigo: ", dados_plano["codigo"])
         print("")
