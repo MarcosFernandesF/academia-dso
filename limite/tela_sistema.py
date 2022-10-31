@@ -1,4 +1,9 @@
-class TelaSistema:
+from limite.tela import Tela
+
+class TelaSistema(Tela):
+
+    def __init__(self):
+        super().__init__()
 
     def mostra_tela_opcoes(self):
         print("\n<---------- MENU PRINCIPAL --------- >")
@@ -10,6 +15,11 @@ class TelaSistema:
         print("5 - Aparelho")
         print("6 - Exercicio")
         print("7 - Treino")
+        print("0 - Encerra Programa")
         opcao = int(input("Escolha a opção: "))
         print("")
+
+        if opcao != 1 and opcao != 2 and opcao != 3 and opcao != 4 and opcao != 5 and opcao != 6 and opcao != 7 and opcao != 0:
+            raise ValueError(">>>Ocorreu uma exceção ValueError")
+
         return opcao
