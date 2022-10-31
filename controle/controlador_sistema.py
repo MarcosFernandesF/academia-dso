@@ -2,7 +2,9 @@ from limite.tela_sistema import TelaSistema
 from controle.controlador_grupoMuscular import ControladorGrupoMuscular
 from controle.controlador_instrutor import ControladorInstrutor
 from controle.controlador_aparelho import ControladorAparelhos
-#from controle.controlador_aluno import ControladorAluno
+from controle.controlador_aluno import ControladorAluno
+from controle.controlador_plano import ControladorPlano
+from controle.controlador_exercicio import ControladorExercicio
 
 class ControladorSistema():
 
