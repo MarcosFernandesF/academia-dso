@@ -11,15 +11,20 @@ class ControladorAparelhos():
     def inicial(self):
         self.abre_tela_inicial()
 
-    def criar_aparelho(self, nome: str):
-        aparelho = Aparelho(f"{nome}")
+    def criar_aparelho(self, nome: str, id: str):
+        aparelho = Aparelho(nome, id)
         self.__aparelhos.append(aparelho)
+
+    def pega_aparelho_por_id(self, id: str):
+        for aparelho in self.__aparelhos:
+            if(aparelho.id == id):
+                return aparelho
+        return None
 
     def listar_aparelhos(self):
         print("\nAparelhos cadastrados:")
         for aparelhos in self.__aparelhos:
-            print (aparelhos)
-        print("")
+            print(f"Nome: {aparelhos.nome} | ID: {aparelhos.id}")
 
     def finalizar(self):
         self.__controlador_sistema.abre_tela_inicial()
