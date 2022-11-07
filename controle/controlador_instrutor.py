@@ -14,6 +14,12 @@ class ControladorInstrutor():
                 return instrutor
         else:
             raise ValueError(">>>Ocorreu uma exceção ValueError")
+    
+    def pega_instrutor_por_cref(self, cref: str):
+        for instrutor in self.__instrutores:
+            if(instrutor.cref == cref):
+                return instrutor
+        return None
 
     def incluir_instrutor(self):
         try:

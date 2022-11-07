@@ -1,9 +1,11 @@
+from limite import tela_treino
 from limite.tela_sistema import TelaSistema
 from controle.controlador_grupoMuscular import ControladorGrupoMuscular
 from controle.controlador_instrutor import ControladorInstrutor
 from controle.controlador_aparelho import ControladorAparelhos
 from controle.controlador_aluno import ControladorAluno
 from controle.controlador_plano import ControladorPlano
+from controle.controlador_treino import ControladorTreino
 from controle.controlador_exercicio import ControladorExercicio
 
 class ControladorSistema():
@@ -15,6 +17,7 @@ class ControladorSistema():
         self.__controlador_exercicio = ControladorExercicio(self)
         self.__controlador_instrutor = ControladorInstrutor(self)
         self.__controlador_aluno = ControladorAluno(self)
+        self.__controlador_treino = ControladorTreino(self)
         self.__controlador_plano = ControladorPlano(self)
 
     def inicia(self):
@@ -47,10 +50,10 @@ class ControladorSistema():
 
     def instacia_grupo_muscular(self):
         grupo_um = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo um")
-        grupo_um = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo dois")
-        grupo_um = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo três")
-        grupo_um = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo quatro")
-        grupo_um = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo cinco")
+        grupo_dois = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo dois")
+        grupo_tres = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo três")
+        grupo_quatro = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo quatro")
+        grupo_cinco = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo cinco")
 
     def instancia_aparelhos(self):
         aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho um", "1")
@@ -59,8 +62,14 @@ class ControladorSistema():
         aparelho_quatro = self.__controlador_aparelhos.criar_aparelho("Aparelho quatro", "4")
         aparelho_cinco = self.__controlador_aparelhos.criar_aparelho("Aparelho cinco", "5")
 
+    def instancia_treino(self):
+        treino = self.__controlador_treino.criar_treino()
+
     def tela_exercicio(self):
         self.__controlador_exercicio.abre_tela_inicial()
+    
+    def tela_treino(self):
+        self.__controlador_treino.abre_tela_inicial()
 
     def abre_tela_inicial(self):
         lista_opcoes = {
@@ -69,6 +78,8 @@ class ControladorSistema():
             3: self.cadastra_grupoMuscular,
             4: self.mostra_planos,
             5: self.tela_aparelhos,
+            6: self.tela_exercicio,
+            7: self.tela_treino,
             0: self.encerra_sistema
         }
 

@@ -27,7 +27,11 @@ class ControladorGrupoMuscular():
     
     def incluir_exercicio(self):
         switcher = {
-            1: "Grupo um"} #adicionar os outros grupos musculares
+            1: "Grupo um",
+            2: "Grupo dois",
+            3: "Grupo tres",
+            4: "Grupo quatro",
+            5: "Grupo cinco"} #adicionar os outros grupos musculares
         escolha = self.__tela_grupoMuscular.mostra_opcoes_grupo_muscular()
         grupo_escolhido = switcher[escolha]
         codigo_exercicio = self.__tela_grupoMuscular.seleciona_exercicio()
@@ -36,7 +40,11 @@ class ControladorGrupoMuscular():
     
     def retirar_exercicio(self):
         switcher = {
-            1: "Grupo um"} #adicionar os outros grupos musculares
+            1: "Grupo um",
+            2: "Grupo dois",
+            3: "Grupo tres",
+            4: "Grupo quatro",
+            5: "Grupo cinco"}#adicionar os outros grupos musculares
         escolha = self.__tela_grupoMuscular.mostra_opcoes_grupo_muscular()
         grupo_escolhido = switcher[escolha]
         codigo_exercicio = self.__tela_grupoMuscular.seleciona_exercicio()

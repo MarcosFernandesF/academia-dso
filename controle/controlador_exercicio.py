@@ -54,7 +54,7 @@ class ControladorExercicio():
             exercicio_selecionado.aparelho = novos_dados_exercicio["id"]
             exercicio_selecionado.id_exercicio = novos_dados_exercicio["id_exercicio"]
         else:
-            pass #mostrar mensagem de exercicio nao existente
+            print("Exercicio não existe")
         
 
     def finalizar(self):

@@ -1,10 +1,13 @@
-from exercicio import Exercicio
+from entidade.exercicio import Exercicio
+from entidade.instrutor import Instrutor
 
 
 class Treino:
-    def __init__(self, nome: str, exercicios: Exercicio, duracao: int, instrutor: Instrutor):
+    def __init__(self, nome: str, exercicio: Exercicio, duracao: int, instrutor: Instrutor, id: str):
         if isinstance(nome, str):
             self.__nome = nome
+        if isinstance(id, str):
+            self.__id = id
         if isinstance(duracao, int):
             self.__duracao = duracao
 
@@ -22,9 +25,13 @@ class Treino:
         return self.__duracao
     
     @duracao.setter
-    def duracao(self, duracao: Duracao):
-        if isinstance(duracao, Duracao):
+    def duracao(self, duracao: int):
+        if isinstance(duracao, int):
             self.__duracao = duracao
+    
+    @property
+    def id(self) -> str:
+        return self.__id
     
     
 
