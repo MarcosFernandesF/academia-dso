@@ -14,13 +14,19 @@ class ControladorPlano():
 
     @planos.setter
     def planos(self, plano):
-        self.__planos.append(plano)
+        if isinstance(plano, Plano):
+            self.__planos.append(plano)
+        else:
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
 
-    def cria_plano(self, nome: str, duracao: str, preco: float, codigo: int):
-        plano = Plano(nome, duracao, preco, codigo)
-        return plano
+    def cria_plano(self, nome: str, duracao: str, preco: float) -> object:
+        try:
+            plano = Plano(nome, duracao, preco)
+            return plano
+        except TypeError:
+            self.__tela_plano.mostra_mensagem(">>>Alguma das entradas estão com o tipo diferente do que deveriam estar!")          
+            self.__tela_plano.mostra_mensagem(">>>nome[str], duracao[str], preco[float]")
 
     def lista_planos(self):
         for plano in self.__planos:
-            #Fazer tratamento de dados aqui ou em "mostra_plano"?
-            self.__tela_plano.mostra_plano({"nome": plano.nome, "duracao": plano.duracao, "preco": plano.preco, "codigo": plano.codigo})
+            self.__tela_plano.mostra_plano({"nome": plano.nome, "duracao": plano.duracao, "preco": plano.preco})

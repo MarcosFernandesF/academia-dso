@@ -13,9 +13,10 @@ class TelaGrupoMuscular():
     def mostra_opcoes_grupo_muscular(self):
         print("<-------- ESCOLHA O GRUPO MUSCULAR ------>")
         print("1 - Grupo Muscular Um")
-        print("2 - Grupo Muscular Um")
-        print("3 - Grupo Muscular Um")
-        print("4 - Grupo Muscular Um")
+        print("2 - Grupo Muscular Dois")
+        print("3 - Grupo Muscular Tres")
+        print("4 - Grupo Muscular Quatro")
+        print("5 - Grupo Muscular Cinco")
 
         opcao = int(input("Escolha a opção: "))
         return opcao
