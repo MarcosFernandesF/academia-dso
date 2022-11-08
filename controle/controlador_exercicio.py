@@ -15,58 +15,77 @@ class ControladorExercicio():
         for exercicio in self.__exercicios:
             if(exercicio.id_exercicio == id):
                 return exercicio
-            return None
+        else:
+            raise ValueError(">>>Ocorreu uma exceção ValueError")
 
     def incluir_exercicio(self):
-        dados_exercicio = self.__tela_exercicio.pega_dados_exercicio()
-        aparelho = self.__controlador_sistema.controlador_aparelho.pega_aparelho_por_id(dados_exercicio["id"])
-        exercicio = Exercicio(dados_exercicio["nome"], aparelho, dados_exercicio["id_exercicio"])
-        self.__exercicios.append(exercicio)
+        try:    
+            dados_exercicio = self.__tela_exercicio.pega_dados_exercicio()
+            aparelho = self.__controlador_sistema.controlador_aparelho.pega_aparelho_por_id(dados_exercicio["id"])
+            exercicio = Exercicio(dados_exercicio["nome"], aparelho, dados_exercicio["id_exercicio"])
+            self.__exercicios.append(exercicio)
+
+        except TypeError as e:
+            self.__tela_exercicio.mostra_mensagem(e)
+            self.__tela_exercicio.mostra_mensagem(">>>O nome possui um tipo diferente do que deveria ter!")          
+            self.__tela_exercicio.mostra_mensagem(">>>nome[str]\n")
+
+        #Pensando em tirar exceção e deixar so um aviso na tela pq n existe aparelho
+        except ValueError as e:
+            self.__tela_exercicio.mostra_mensagem(e)
+            self.__tela_exercicio.mostra_mensagem(">>>Não existe Aparelho com este ID")          
+
+    def alterar_exercicio(self):
+        try:
+            if (self.listar_exercicios()) is not None:
+                id_exercicio = self.__tela_exercicio.seleciona_exercicio()
+                exercicio = self.pega_exercicio_por_id(id_exercicio)
+
+                novos_dados_exercicio = self.__tela_exercicio.pega_dados_exercicio()
+                exercicio.nome = novos_dados_exercicio["nome"]
+                exercicio.aparelho = novos_dados_exercicio["id"]
+                exercicio.id_exercicio = novos_dados_exercicio["id_exercicio"]
+
+        except ValueError as e:
+            #Checar essas mensagens
+            self.__tela_exercicio.mostra_mensagem(e)
+            self.__tela_exercicio.mostra_mensagem(">>>Entrada Inválida!")          
+            self.__tela_exercicio.mostra_mensagem(">>>Escreva a entrada de maneira correta!\n")
+
+    def excluir_exercicio(self):
+        try:
+            if (self.listar_exercicios()) is not None:
+                id_exercicio = self.__tela_exercicio.seleciona_exercicio()
+                exercicio = self.pega_exercicio_por_id(id_exercicio)
+
+                self.__exercicios.remove(exercicio)
+                self.listar_exercicios()
+
+        except ValueError as e:
+            self.__tela_exercicio.mostra_mensagem(e)
+            self.__tela_exercicio.mostra_mensagem(">>>Não há nenhum exercicio com este ID!\n") 
 
     def listar_exercicios(self):
-        print("<-------- LISTANDO EXERCICIOS ------->")
-        for exercicio in self.__exercicios:
-            self.__tela_exercicio.mostra_exercicio(
-                {
-                "nome": exercicio.nome, 
-                "aparelho": exercicio.aparelho.nome, #corrigir print do nome do aparelho
-                "id_exercicio": exercicio.id_exercicio, 
-                }
-            )
-    
-    def excluir_exercicio(self):
-        codigo_exercicio = self.__tela_exercicio.seleciona_exercicio()
-        exercicio_selecionado = self.pega_exercicio_por_id(codigo_exercicio)
-
-        if(exercicio_selecionado is not None):
-            self.__exercicios.remove(exercicio_selecionado)
-            print("Exercicio removido")
+        if len(self.__exercicios) == 0:
+            self.__tela_exercicio.mostra_mensagem("ATENÇÃO: Não existe exercícios\n")
+            return None
         else:
-            pass #mostar mensagem de exercicio nao existente
+            self.__tela_exercicio.mostra_mensagem("-------- LISTA DE EXERCÍCIOS --------")
+            for exercicio in self.__exercicios:
+                #corrigir print do nome do aparelho
+                self.__tela_exercicio.mostra_exercicio({"nome": exercicio.nome, "aparelho": exercicio.aparelho.nome, "id_exercicio": exercicio.id_exercicio})
+            return True
     
-    def modificar_exercicio(self):
-        codigo_exercicio = self.__tela_exercicio.seleciona_exercicio()
-        exercicio_selecionado = self.pega_exercicio_por_id(codigo_exercicio)
+    def retornar(self):
+        self.__controlador_sistema.abre_tela_()
 
-        if (exercicio_selecionado is not None):
-            novos_dados_exercicio = self.__tela_exercicio.pega_dados_exercicio()
-            exercicio_selecionado.nome = novos_dados_exercicio["nome"]
-            exercicio_selecionado.aparelho = novos_dados_exercicio["id"]
-            exercicio_selecionado.id_exercicio = novos_dados_exercicio["id_exercicio"]
-        else:
-            print("Exercicio não existe")
-        
-
-    def finalizar(self):
-        self.__controlador_sistema.abre_tela_inicial()
-
-    def abre_tela_inicial(self):
+    def abre_tela_(self):
         switcher = {
-            0: self.finalizar, 1: self.incluir_exercicio, 2: self.modificar_exercicio, 3:self.excluir_exercicio, 4: self.listar_exercicios
+            0: self.retornar, 1: self.incluir_exercicio, 2: self.alterar_exercicio, 3:self.excluir_exercicio, 4: self.listar_exercicios
             }
 
         while True:
-            opcao = self.__tela_exercicio.mostra_tela_opcoes()
+            opcao = self.__tela_exercicio.tela_opcoes()
             funcao_escolhida = switcher[opcao]
             funcao_escolhida()
 

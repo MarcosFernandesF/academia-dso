@@ -53,6 +53,10 @@ class ControladorInstrutor():
                 instrutor.cpf = novos_dados_instrutor["cpf"]
                 instrutor.cref = novos_dados_instrutor["cref"]
 
+        except TypeError as e:
+            self.__tela_instrutor.mostra_mensagem(e)
+            self.__tela_instrutor.mostra_mensagem(">>>O CPF está possui um tipo diferente do que deveria ter!")          
+            self.__tela_instrutor.mostra_mensagem(">>>CPF[str]\n") 
         except ValueError as e:
             self.__tela_instrutor.mostra_mensagem(e)
             self.__tela_instrutor.mostra_mensagem(">>>Entrada Inválida!")          

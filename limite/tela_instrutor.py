@@ -42,7 +42,6 @@ class TelaInstrutor(Tela):
         else:
             raise TypeError(">>>Ocorreu uma exceção TypeError")
 
-    #Fazer o tratamento de dados aqui, caso a enrada seja diferente do esperado
     def mostra_instrutor(self, dados_instrutor):
         print("Nome do Instrutor: ", dados_instrutor["nome"])
         print("Sexo do Instrutor: ", dados_instrutor["sexo"])
@@ -51,14 +50,22 @@ class TelaInstrutor(Tela):
         print("")
 
     #Fazer o tratamento de dados aqui, caso a enrada seja diferente do esperado
+    #Implementar validação cpf
     def seleciona_instrutor(self):
         cpf = input("CPF do instrutor que deseja selecionar: ")
         print("")
-        return cpf
 
+        if isinstance(cpf, str):
+            return cpf
+        else:
+            raise TypeError(">>>Ocorreu uma exceção TypeError")  
+            
     ##Metodos Abstratos
     def seleciona_aluno(self):
         cpf = input("CPF do aluno que deseja selecionar: ")
         print("")
-        return cpf
-    
+
+        if isinstance(cpf, str):
+            return cpf
+        else:
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
