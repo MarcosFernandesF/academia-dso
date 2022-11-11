@@ -31,8 +31,3 @@ class Exercicio:
     @property
     def id_exercicio(self) -> str:
         return self.__id_exercicio
-    
-    @id_exercicio.setter
-    def id_exercicio(self, id: str):
-        if isinstance(id, str):
-            self.__id_exercicio = id

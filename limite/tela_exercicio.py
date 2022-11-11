@@ -22,28 +22,25 @@ class TelaExercicio(Tela):
         return opcao
     
     #Fazer um id do aparelho automatico (que incrementa)
-    #Excluir o inpuit dos dois ids apos arrumar.
+    #Excluir o input do id aparelho.
     def pega_dados_exercicio(self):
         print("-------- DADOS EXERCICIO --------")
         nome = input("Nome: ")
         id = input("ID do Aparelho: ")
-        id_exercicio = input("ID do Exercício: ")
         print("")
 
         if isinstance(nome, str):
-            return {"nome": nome, "id": id, "id_exercicio": id_exercicio}
+            return {"nome": nome, "id": id}
         else:
             raise TypeError(">>>Ocorreu uma exceção TypeError")
     
-    #Excluir o input do id apos arrumar
     def mostra_exercicio(self, dados_exercicio):
         print("Nome do Exercício: ", dados_exercicio["nome"])
         print("Aparelho utilizado no Exercício:", dados_exercicio["aparelho"])
-        print("ID do Exercício: ", dados_exercicio["id_exercicio"])
+        print("ID do exercício: ", dados_exercicio["id_exercicio"])
         print("")           
     
     def seleciona_exercicio(self):
-        #Mudar id para int no diagrama
         id_exercicio = input ("ID do Exercício: ")
         print("")
 

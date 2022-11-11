@@ -7,6 +7,7 @@ class ControladorExercicio():
         self.__tela_exercicio = TelaExercicio()
         self.__controlador_sistema = controlador_sistema
         self.__exercicios = []
+        self.__id = 0
 
     def inicial(self):
         self.abre_tela_inicial()
@@ -21,8 +22,9 @@ class ControladorExercicio():
     def incluir_exercicio(self):
         try:    
             dados_exercicio = self.__tela_exercicio.pega_dados_exercicio()
-            aparelho = self.__controlador_sistema.controlador_aparelho.pega_aparelho_por_id(dados_exercicio["id"])
-            exercicio = Exercicio(dados_exercicio["nome"], aparelho, dados_exercicio["id_exercicio"])
+            id_exercicio = self.cria_id()
+            aparelho = self.__controlador_sistema.controlador_aparelho.pega_aparelho_por_id(id_exercicio)
+            exercicio = Exercicio(dados_exercicio["nome"], aparelho, id_exercicio)
             self.__exercicios.append(exercicio)
 
         except TypeError as e:
@@ -30,7 +32,7 @@ class ControladorExercicio():
             self.__tela_exercicio.mostra_mensagem(">>>O nome possui um tipo diferente do que deveria ter!")          
             self.__tela_exercicio.mostra_mensagem(">>>nome[str]\n")
 
-        #Pensando em tirar exceção e deixar so um aviso na tela pq n existe aparelho
+        #Falta de raise no pega_aparelho_por_id
         except ValueError as e:
             self.__tela_exercicio.mostra_mensagem(e)
             self.__tela_exercicio.mostra_mensagem(">>>Não existe Aparelho com este ID")          
@@ -43,14 +45,15 @@ class ControladorExercicio():
 
                 novos_dados_exercicio = self.__tela_exercicio.pega_dados_exercicio()
                 exercicio.nome = novos_dados_exercicio["nome"]
-                exercicio.aparelho = novos_dados_exercicio["id"]
-                exercicio.id_exercicio = novos_dados_exercicio["id_exercicio"]
-
-        except ValueError as e:
-            #Checar essas mensagens
+                exercicio.aparelho = novos_dados_exercicio["aparelho"]
+        
+        except TypeError as e:
             self.__tela_exercicio.mostra_mensagem(e)
-            self.__tela_exercicio.mostra_mensagem(">>>Entrada Inválida!")          
-            self.__tela_exercicio.mostra_mensagem(">>>Escreva a entrada de maneira correta!\n")
+            self.__tela_exercicio.mostra_mensagem(">>>O ID ou nome possui um tipo diferente do que deveria ter!")
+            self.__tela_exercicio.mostra_mensagem(">>>id[int], nome[str]")
+        except ValueError as e:
+            self.__tela_exercicio.mostra_mensagem(e)
+            self.__tela_exercicio.mostra_mensagem(">>>ID inválido!")          
 
     def excluir_exercicio(self):
         try:
@@ -60,7 +63,10 @@ class ControladorExercicio():
 
                 self.__exercicios.remove(exercicio)
                 self.listar_exercicios()
-
+        
+        except TypeError as e:
+            self.__tela_exercicio.mostra_mensagem(e)
+            self.__tela_exercicio.mostra_mensagem(">>>O ID digitado não possui o tipo adequado(int)")
         except ValueError as e:
             self.__tela_exercicio.mostra_mensagem(e)
             self.__tela_exercicio.mostra_mensagem(">>>Não há nenhum exercicio com este ID!\n") 
@@ -75,20 +81,38 @@ class ControladorExercicio():
                 #corrigir print do nome do aparelho
                 self.__tela_exercicio.mostra_exercicio({"nome": exercicio.nome, "aparelho": exercicio.aparelho.nome, "id_exercicio": exercicio.id_exercicio})
             return True
+
+    def cria_id(self):
+        #Pega o id existente, incrementa um e armazena na variável id_exercício
+        id_exercicio = self.id + 1
+        #Seta o id do controlador como o id novo gerado
+        self.id = id_exercicio
+        #Retorna o id para a variável que chamou a função
+        return id_exercicio
     
     def retornar(self):
         self.__controlador_sistema.abre_tela_()
 
     def abre_tela_(self):
-        switcher = {
+        lista_opcoes = {
             0: self.retornar, 1: self.incluir_exercicio, 2: self.alterar_exercicio, 3:self.excluir_exercicio, 4: self.listar_exercicios
             }
 
-        while True:
-            opcao = self.__tela_exercicio.tela_opcoes()
-            funcao_escolhida = switcher[opcao]
-            funcao_escolhida()
+        while (True):
+            try:
+                lista_opcoes[self.__tela_exercicio.tela_opcoes()]()
+            except ValueError as e:
+                self.__tela_instrutor.mostra_mensagem(e)
+                self.__tela_instrutor.mostra_mensagem(">>>O valor digitado não corresponde as opções\n")
 
     @property
     def exercicios(self):
         return self.__exercicios
+
+    @property
+    def id(self):
+        return self.__id
+    
+    @id.setter
+    def id(self, id):
+        self.__id = id
