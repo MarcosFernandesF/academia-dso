@@ -9,9 +9,6 @@ class ControladorExercicio():
         self.__exercicios = []
         self.__id = 0
 
-    def inicial(self):
-        self.abre_tela_inicial()
-
     def pega_exercicio_por_id(self, id: str):
         for exercicio in self.__exercicios:
             if(exercicio.id_exercicio == id):
@@ -91,11 +88,15 @@ class ControladorExercicio():
         return id_exercicio
     
     def retornar(self):
-        self.__controlador_sistema.abre_tela_()
+        self.__controlador_sistema.abre_tela_inicial()
 
-    def abre_tela_(self):
+    def abre_tela_inicial(self):
         lista_opcoes = {
-            0: self.retornar, 1: self.incluir_exercicio, 2: self.alterar_exercicio, 3:self.excluir_exercicio, 4: self.listar_exercicios
+            0: self.retornar, 
+            1: self.incluir_exercicio, 
+            2: self.alterar_exercicio, 
+            3:self.excluir_exercicio, 
+            4: self.listar_exercicios
             }
 
         while (True):

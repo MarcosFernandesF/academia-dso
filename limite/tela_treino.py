@@ -10,13 +10,18 @@ class TelaTreino():
         print("3 - Remover treino")
         print("3 - Listar treinos")
         print("0 - Voltar")
-
         opcao = int(input("Escolha a opção: "))
+
+        if opcao != 1 and opcao != 2 and opcao != 3 and opcao != 4 and opcao != 0:
+            raise ValueError(">>>Ocorreu uma exceção ValueError")
         return opcao
 
     def seleciona_exercicio(self):
         id_exercicio = input ("ID do Exercício: ")
-        return id_exercicio
+        if isinstance(id_exercicio, int):
+            return id_exercicio
+        else:
+            raise TypeError(">>>Ocorreu uma exceção TypeError")
 
     def pega_dados_treino(self):
         print("=========== DADOS TREINO ===========")

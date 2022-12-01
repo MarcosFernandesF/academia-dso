@@ -1,5 +1,3 @@
-#Importar exercicio
-
 class Aparelho:
     def __init__(self, nome: str, id: str):
         if isinstance(nome, str):
