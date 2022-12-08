@@ -29,7 +29,6 @@ class ControladorExercicio():
             self.__tela_exercicio.mostra_mensagem(">>>O nome possui um tipo diferente do que deveria ter!")          
             self.__tela_exercicio.mostra_mensagem(">>>nome[str]\n")
 
-        #Falta de raise no pega_aparelho_por_id
         except ValueError as e:
             self.__tela_exercicio.mostra_mensagem(e)
             self.__tela_exercicio.mostra_mensagem(">>>Não existe Aparelho com este ID")          
@@ -76,14 +75,14 @@ class ControladorExercicio():
             self.__tela_exercicio.mostra_mensagem("-------- LISTA DE EXERCÍCIOS --------")
             for exercicio in self.__exercicios:
                 #corrigir print do nome do aparelho
-                self.__tela_exercicio.mostra_exercicio({"nome": exercicio.nome, "aparelho": exercicio.aparelho.nome, "id_exercicio": exercicio.id_exercicio})
+                self.__tela_exercicio.mostra_exercicio({"nome": exercicio.nome, "aparelho": exercicio.aparelho, "id_exercicio": exercicio.id_exercicio})
             return True
 
     def cria_id(self):
         #Pega o id existente, incrementa um e armazena na variável id_exercício
-        id_exercicio = self.id + 1
+        id_exercicio = self.__id + 1
         #Seta o id do controlador como o id novo gerado
-        self.id = id_exercicio
+        self.__id = id_exercicio
         #Retorna o id para a variável que chamou a função
         return id_exercicio
     
@@ -95,7 +94,7 @@ class ControladorExercicio():
             0: self.retornar, 
             1: self.incluir_exercicio, 
             2: self.alterar_exercicio, 
-            3:self.excluir_exercicio, 
+            3: self.excluir_exercicio, 
             4: self.listar_exercicios
             }
 
@@ -103,8 +102,8 @@ class ControladorExercicio():
             try:
                 lista_opcoes[self.__tela_exercicio.tela_opcoes()]()
             except ValueError as e:
-                self.__tela_instrutor.mostra_mensagem(e)
-                self.__tela_instrutor.mostra_mensagem(">>>O valor digitado não corresponde as opções\n")
+                self.__tela_exercicio.mostra_mensagem(e)
+                self.__tela_exercicio.mostra_mensagem(">>>O valor digitado não corresponde as opções\n")
 
     @property
     def exercicios(self):

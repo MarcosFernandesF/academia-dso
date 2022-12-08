@@ -19,7 +19,9 @@ class ControladorAparelhos():
         for aparelho in self.__aparelhos:
             if(aparelho.id == id):
                 return aparelho
-        return None
+            else:
+                self.listar_aparelhos()
+                raise ValueError
 
     def listar_aparelhos(self):
         print("\nAparelhos cadastrados:")

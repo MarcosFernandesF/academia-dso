@@ -25,7 +25,6 @@ class TelaInstrutor(Tela):
 
         return opcao
     
-    #Fazer o tratamento de dados aqui, caso a entrada seja diferente do esperado
     def pega_dados_instrutor(self):
         print("--------- DADOS INSTRUTOR ---------")
         nome = input("Nome: ")
@@ -49,7 +48,6 @@ class TelaInstrutor(Tela):
         print("CPF do Instrutor: ", dados_instrutor["cpf"])
         print("")
 
-    #Fazer o tratamento de dados aqui, caso a enrada seja diferente do esperado
     #Implementar validação cpf
     def seleciona_instrutor(self):
         cpf = input("CPF do instrutor que deseja selecionar: ")
