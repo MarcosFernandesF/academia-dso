@@ -45,3 +45,11 @@ class TelaAluno(Tela):
         else:
             raise TypeError(">>>Ocorreu uma exceção TypeError")
         
+    def seleciona_aluno(self):
+        cpf = input("CPF do aluno que deseja selecionar: ")
+        print("")
+
+        if isinstance(cpf, str):
+            return cpf
+        else:
+            raise TypeError(">>>Ocorreu uma exceção TypeError")

@@ -8,6 +8,10 @@ class ControladorInstrutor():
         self.__tela_instrutor = TelaInstrutor()
         self.__controlador_sistema = controlador_sistema
 
+    @property
+    def instrutores(self):
+        return self.__instrutores
+
     def pega_instrutor_por_cpf(self, cpf: str):
         for instrutor in self.__instrutores:
             if(instrutor.cpf == cpf):
@@ -89,6 +93,7 @@ class ControladorInstrutor():
     def vincular_aluno(self):
         try:
             controlador_aluno = self.__controlador_sistema.controlador_aluno
+            tela_aluno = controlador_aluno.tela_aluno
 
             if (self.lista_instrutores()) is not None:
                 self.__tela_instrutor.mostra_mensagem("Para qual instrutor deseja vincular um aluno?\n")
@@ -99,7 +104,7 @@ class ControladorInstrutor():
                 self.__tela_instrutor.mostra_mensagem("Qual aluno deseja vincular? \n")
                 controlador_aluno.lista_alunos()
 
-                cpf_aluno = self.__tela_instrutor.seleciona_aluno()
+                cpf_aluno =  tela_aluno.seleciona_aluno()
                 aluno = controlador_aluno.pega_aluno_por_cpf(cpf_aluno)
 
                 for aluno in instrutor.alunos:
@@ -117,17 +122,18 @@ class ControladorInstrutor():
     def desvincular_aluno(self):
         try:
             controlador_aluno = self.__controlador_sistema.controlador_aluno
+            tela_aluno = controlador_aluno.tela_aluno
 
-            if (self.lista_instrutores()) is not None:
-                self.__tela_instrutor.mostra_mensagem("Para qual instrutor deseja desvincular um aluno?\n")
+            if (len(self.instrutores) != 0):
                 
-                cpf_instrutor = self.__tela_instrutor.seleciona_instrutor()
-                instrutor = self.pega_instrutor_por_cpf(cpf_instrutor)
+                instrutor = self.lista_alunos_vinculados()
 
-                controlador_aluno.lista_alunos()
+                if instrutor is None:
+                    raise TypeError("Não há instrutores na lista")
+
                 self.__tela_instrutor.mostra_mensagem("Qual aluno deseja desvincular? \n")
 
-                cpf_aluno = self.__tela_instrutor.seleciona_aluno()
+                cpf_aluno = tela_aluno.seleciona_aluno()
                 aluno = controlador_aluno.pega_aluno_por_cpf(cpf_aluno)
 
                 instrutor.alunos.remove(aluno)
@@ -136,11 +142,16 @@ class ControladorInstrutor():
         except ValueError as e:
             self.__tela_instrutor.mostra_mensagem(e)
             self.__tela_instrutor.mostra_mensagem(">>>Instrutor ou Aluno com CPF inválido!\n")
+        except TypeError as e:
+            self.__tela_instrutor.mostra_mensagem(e)
 
     def lista_alunos_vinculados(self):
         try:
-            if (self.lista_instrutores()) is not None:
-                cpf_instrutor = self.__tela_instrutor.seleciona_aluno()
+            controlador_aluno = self.__controlador_sistema.controlador_aluno
+
+            if (len(self.instrutores) != 0):
+                self.lista_instrutores()
+                cpf_instrutor = self.__tela_instrutor.seleciona_instrutor()
                 instrutor = self.pega_instrutor_por_cpf(cpf_instrutor)
 
                 if len(instrutor.alunos) == 0:
@@ -149,6 +160,10 @@ class ControladorInstrutor():
                     self.__tela_instrutor.mostra_mensagem("---------- LISTA DE ALUNOS VINCULADOS ----------")
                     for aluno in instrutor.alunos:
                         self.__controlador_sistema.controlador_aluno.tela_aluno.mostra_aluno({"nome": aluno.nome, "sexo": aluno.sexo, "cpf": aluno.cpf, "plano": aluno.plano})
+                return instrutor
+
+            return None
+
         except ValueError as e:
             self.__tela_instrutor.mostra_mensagem(e)
             self.__tela_instrutor.mostra_mensagem(">>>Instrutor ou Aluno com CPF inválido!\n")
