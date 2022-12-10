@@ -19,6 +19,8 @@ class ControladorSistema():
         self.__controlador_aluno = ControladorAluno(self)
         self.__controlador_treino = ControladorTreino(self)
         self.__controlador_plano = ControladorPlano(self)
+        self.__armazena_id = 0
+
 
     def inicia(self):
         self.abre_tela_inicial()
@@ -47,13 +49,6 @@ class ControladorSistema():
 
     def tela_aparelhos(self):
         self.__controlador_aparelhos.abre_tela_inicial()
-
-    def instacia_grupo_muscular(self):
-        grupo_um = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo um")
-        grupo_dois = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo dois")
-        grupo_tres = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo três")
-        grupo_quatro = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo quatro")
-        grupo_cinco = self.__controlador_grupoMuscular.criar_grupoMuscular("Grupo cinco")
 
     def instancia_aparelhos(self):
         aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho um", "1")
@@ -95,6 +90,14 @@ class ControladorSistema():
     def encerra_sistema(self):
         exit(0)
 
+    def cria_id(self):
+    #Pega o id existente, incrementa um e armazena na variável id_exercício
+        id_criado = self.__armazena_id + 1
+    #Seta o id do controlador como o id novo gerado
+        self.__armazena_id = id_criado
+    #Retorna o id para a variável que chamou a função
+        return str(id_criado)
+
     @property
     def controlador_instrutor(self):
         return self.__controlador_instrutor
@@ -118,4 +121,12 @@ class ControladorSistema():
     @property
     def controlador_exercicio(self):
         return self.__controlador_exercicio
+    
+    @property
+    def armazena_id(self):
+        return self.__armazena_id
+    
+    @armazena_id.setter
+    def armazena_id(self, id):
+        self.__armazena_id = id
 
