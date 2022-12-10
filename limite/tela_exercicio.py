@@ -16,7 +16,7 @@ class TelaExercicio(Tela):
         opcao = int(input("Escolha a opção: "))
         print("")
 
-        if opcao != 1 and opcao != 2 and opcao != 3 and opcao != 4 and opcao != 0:
+        if opcao > 4 or opcao < 0:
             raise ValueError(">>>Ocorreu uma exceção ValueError")
 
         return opcao
