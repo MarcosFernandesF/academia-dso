@@ -7,7 +7,6 @@ class ControladorExercicio():
         self.__tela_exercicio = TelaExercicio()
         self.__controlador_sistema = controlador_sistema
         self.__exercicios = []
-        self.__id = 0
 
     def pega_exercicio_por_id(self, id: str):
         for exercicio in self.__exercicios:
@@ -19,9 +18,8 @@ class ControladorExercicio():
     def incluir_exercicio(self):
         try:    
             dados_exercicio = self.__tela_exercicio.pega_dados_exercicio()
-            id_exercicio = self.cria_id()
             aparelho = self.__controlador_sistema.controlador_aparelho.pega_aparelho_por_id(id_exercicio)
-            exercicio = Exercicio(dados_exercicio["nome"], aparelho, id_exercicio)
+            exercicio = Exercicio(dados_exercicio["nome"], aparelho, self.__controlador_sistema.cria_id())
             self.__exercicios.append(exercicio)
 
         except TypeError as e:
@@ -75,16 +73,14 @@ class ControladorExercicio():
             self.__tela_exercicio.mostra_mensagem("-------- LISTA DE EXERCÍCIOS --------")
             for exercicio in self.__exercicios:
                 #corrigir print do nome do aparelho
-                self.__tela_exercicio.mostra_exercicio({"nome": exercicio.nome, "aparelho": exercicio.aparelho, "id_exercicio": exercicio.id_exercicio})
+                self.__tela_exercicio.mostra_exercicio(
+                    {
+                "nome": exercicio.nome,
+                "aparelho": exercicio.aparelho.nome,
+                "id_exercicio": exercicio.id_exercicio
+                }
+            )
             return True
-
-    def cria_id(self):
-        #Pega o id existente, incrementa um e armazena na variável id_exercício
-        id_exercicio = self.__id + 1
-        #Seta o id do controlador como o id novo gerado
-        self.__id = id_exercicio
-        #Retorna o id para a variável que chamou a função
-        return id_exercicio
     
     def retornar(self):
         self.__controlador_sistema.abre_tela_inicial()
@@ -108,11 +104,3 @@ class ControladorExercicio():
     @property
     def exercicios(self):
         return self.__exercicios
-
-    @property
-    def id(self):
-        return self.__id
-    
-    @id.setter
-    def id(self, id):
-        self.__id = id
