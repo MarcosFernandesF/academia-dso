@@ -1,4 +1,4 @@
-from dao import DAO
+from DAOs.dao import DAO
 from entidade.aluno import Aluno
 
 class AlunoDAO(DAO):
@@ -17,6 +17,6 @@ class AlunoDAO(DAO):
         if isinstance(key, str):
             return super().get(key)
 
-    def remove(self, key: int):
+    def remove(self, key: str):
         if(isinstance(key, str)):
             return super().remove(key)
