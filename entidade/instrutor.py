@@ -1,5 +1,6 @@
 from entidade.pessoa import Pessoa
 from entidade.aluno import Aluno
+from DAOs.aluno_dao import AlunoDAO
 
 class Instrutor(Pessoa):
     def __init__(self, nome: str, sexo: str, cpf: str, cref: str):
@@ -9,7 +10,7 @@ class Instrutor(Pessoa):
         else:
             raise TypeError(">>>Ocorreu uma exceção TypeError")
 
-        self.__alunos = []
+        self.__aluno_DAO = AlunoDAO()
 
     @property
     def cref(self) -> str:
@@ -23,13 +24,13 @@ class Instrutor(Pessoa):
             raise TypeError(">>>Ocorreu uma exceção TypeError")
 
     @property
-    def alunos(self) -> list:
-        return self.__alunos
+    def aluno_DAO(self) -> list:
+        return self.__aluno_DAO
 
-    @alunos.setter
-    def alunos(self, aluno):
+    @aluno_DAO.setter
+    def aluno_DAO(self, aluno):
         if isinstance(aluno, Aluno):
-            self.__alunos.append(aluno)
+            self.__aluno_DAO.add(aluno)
         else:
             raise TypeError(">>>Ocorreu uma exceção TypeError")
 

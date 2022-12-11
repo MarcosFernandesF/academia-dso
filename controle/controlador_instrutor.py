@@ -1,26 +1,25 @@
 from limite.tela_instrutor import TelaInstrutor
 from entidade.instrutor import Instrutor
+from DAOs.instrutor_dao import instrutorDAO
 
 class ControladorInstrutor():
     
     def __init__(self, controlador_sistema):
-        self.__instrutores = []
+        #self.__instrutores = []
+        self.__instrutor_DAO = instrutorDAO()
+
         self.__tela_instrutor = TelaInstrutor()
         self.__controlador_sistema = controlador_sistema
 
-    @property
-    def instrutores(self):
-        return self.__instrutores
-
     def pega_instrutor_por_cpf(self, cpf: str):
-        for instrutor in self.__instrutores:
+        for instrutor in self.__instrutor_DAO.get_all():
             if(instrutor.cpf == cpf):
                 return instrutor
         else:
             raise ValueError(">>>Ocorreu uma exceção ValueError")
     
     def pega_instrutor_por_cref(self, cref: str):
-        for instrutor in self.__instrutores:
+        for instrutor in self.__instrutor_DAO.get_all():
             if(instrutor.cref == cref):
                 return instrutor
         return None
@@ -28,13 +27,14 @@ class ControladorInstrutor():
     def incluir_instrutor(self):
         try:
             dados_instrutor = self.__tela_instrutor.pega_dados_instrutor()
-            for instrutor in self.__instrutores:
+            for instrutor in self.__instrutor_DAO.get_all():
                 if dados_instrutor["cpf"] == instrutor.cpf:
                     self.__tela_instrutor.mostra_mensagem("Já existe um instrutor com este CPF!\n")
                     break
             else:
                 instrutor = Instrutor(dados_instrutor["nome"], dados_instrutor["sexo"], dados_instrutor["cpf"], dados_instrutor["cref"])
-                self.__instrutores.append(instrutor)
+                #self.__instrutores.append(instrutor)
+                self.__instrutor_DAO.add(instrutor)
                 
         except TypeError as e:
             self.__tela_instrutor.mostra_mensagem(e)
@@ -54,8 +54,10 @@ class ControladorInstrutor():
                 novos_dados_instrutor = self.__tela_instrutor.pega_dados_instrutor()
                 instrutor.nome = novos_dados_instrutor["nome"]
                 instrutor.sexo = novos_dados_instrutor["sexo"]
-                instrutor.cpf = novos_dados_instrutor["cpf"]
+                instrutor.cpf = novos_dados_instrutor["cpf"] # Não pode alterar o cpf para funcionar
                 instrutor.cref = novos_dados_instrutor["cref"]
+
+                self.__instrutor_DAO.update(instrutor)
 
         except TypeError as e:
             self.__tela_instrutor.mostra_mensagem(e)
@@ -72,7 +74,7 @@ class ControladorInstrutor():
                 cpf_instrutor = self.__tela_instrutor.seleciona_instrutor()
                 instrutor = self.pega_instrutor_por_cpf(cpf_instrutor)
 
-                self.__instrutores.remove(instrutor)
+                self.__instrutor_DAO.remove(instrutor.cpf)
                 self.lista_instrutores()
 
         except ValueError as e:
@@ -80,12 +82,12 @@ class ControladorInstrutor():
             self.__tela_instrutor.mostra_mensagem(">>>Não há nenhum instrutor com este CPF!\n") 
 
     def lista_instrutores(self):
-        if len(self.__instrutores) == 0:
+        if len(self.__instrutor_DAO.get_all()) == 0:
                 self.__tela_instrutor.mostra_mensagem("ATENÇÃO: Não existe instrutores\n")
                 return None
         else:
             self.__tela_instrutor.mostra_mensagem("---------- LISTA DE INSTRUTORES ----------")
-            for instrutor in self.__instrutores:
+            for instrutor in self.__instrutor_DAO.get_all():
                 #Não fiz o tratamento aqui pois se estivesse errado ele não passario do "pega_dados_instrutor"
                 self.__tela_instrutor.mostra_instrutor({"nome": instrutor.nome, "sexo": instrutor.sexo, "cpf": instrutor.cpf, "cref": instrutor.cref})
             return True
@@ -107,12 +109,12 @@ class ControladorInstrutor():
                 cpf_aluno =  tela_aluno.seleciona_aluno()
                 aluno = controlador_aluno.pega_aluno_por_cpf(cpf_aluno)
 
-                for aluno in instrutor.alunos:
+                for aluno in instrutor.aluno_DAO.get_all():
                     if cpf_aluno == aluno.cpf:
                         self.__tela_instrutor.mostra_mensagem("Esse aluno ja está vinculado ao instrutor!\n")
                         break
                 else:
-                    instrutor.alunos = aluno
+                    instrutor.aluno_DAO = aluno
                     self.__tela_instrutor.mostra_mensagem("Aluno vinculado com sucesso!\n")
 
         except ValueError as e:
@@ -149,16 +151,16 @@ class ControladorInstrutor():
         try:
             controlador_aluno = self.__controlador_sistema.controlador_aluno
 
-            if (len(self.instrutores) != 0):
+            if (len(self.__instrutor_DAO.get_all()) != 0):
                 self.lista_instrutores()
                 cpf_instrutor = self.__tela_instrutor.seleciona_instrutor()
                 instrutor = self.pega_instrutor_por_cpf(cpf_instrutor)
 
-                if len(instrutor.alunos) == 0:
+                if len(instrutor.aluno_DAO.get_all()) == 0:
                     self.__tela_instrutor.mostra_mensagem("ATENÇÃO: Não existe alunos vinculados!\n")
                 else:
                     self.__tela_instrutor.mostra_mensagem("---------- LISTA DE ALUNOS VINCULADOS ----------")
-                    for aluno in instrutor.alunos:
+                    for aluno in instrutor.aluno_DAO.get_all():
                         self.__controlador_sistema.controlador_aluno.tela_aluno.mostra_aluno({"nome": aluno.nome, "sexo": aluno.sexo, "cpf": aluno.cpf, "plano": aluno.plano})
                 return instrutor
 

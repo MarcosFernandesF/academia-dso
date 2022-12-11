@@ -1,10 +1,13 @@
 from limite.tela_aluno import TelaAluno
 from entidade.aluno import Aluno
+from DAOs.aluno_dao import AlunoDAO
 
 class ControladorAluno():
     
     def __init__(self, controlador_sistema):
-        self.__alunos = []
+        #self.__alunos = []
+        self.__aluno_DAO = AlunoDAO() #Lista de alunos
+
         self.__tela_aluno = TelaAluno()
         self.__controlador_sistema = controlador_sistema
 
@@ -26,7 +29,7 @@ class ControladorAluno():
             return plano
 
     def pega_aluno_por_cpf(self, cpf: str):
-        for aluno in self.__alunos:
+        for aluno in self.__aluno_DAO.get_all():
             if(aluno.cpf == cpf):
                 return aluno
         else:
@@ -41,13 +44,14 @@ class ControladorAluno():
 
             dados_aluno["plano"] = self.verifica_plano(lista_de_planos, dados_aluno)
 
-            for aluno in self.__alunos:
+            for aluno in self.__aluno_DAO.get_all():
                 if dados_aluno["cpf"] == aluno.cpf:
                     self.__tela_aluno.mostra_mensagem("Já existe um aluno com este CPF!\n")
                     break
             else:
                 aluno = Aluno(dados_aluno["nome"], dados_aluno["sexo"], dados_aluno["cpf"], dados_aluno["plano"])
-                self.__alunos.append(aluno)
+                #self.__alunos.append(aluno)
+                self.__aluno_DAO.add(aluno)
                 self.__tela_aluno.mostra_mensagem("Aluno cadastrado com sucesso!\n")
 
         except TypeError as e:
@@ -75,6 +79,7 @@ class ControladorAluno():
                 aluno.sexo = novos_dados_aluno["sexo"]
                 aluno.cpf = novos_dados_aluno["cpf"]
                 aluno.plano = novos_dados_aluno["plano"]
+                self.__aluno_DAO.update(aluno)
 
         except ValueError as e:
             self.__tela_aluno.mostra_mensagem(e)
@@ -87,7 +92,7 @@ class ControladorAluno():
                 cpf_aluno = self.__tela_aluno.seleciona_aluno()
                 aluno = self.pega_aluno_por_cpf(cpf_aluno)
 
-                self.__alunos.remove(aluno)
+                self.__aluno_DAO.remove(aluno.cpf)
                 self.__tela_aluno.mostra_mensagem("Aluno removido com sucesso! \n")
 
         except ValueError as e:
@@ -95,12 +100,12 @@ class ControladorAluno():
             self.__tela_aluno.mostra_mensagem(">>>Não há nenhum instrutor com este CPF!\n") 
 
     def lista_alunos(self):
-        if len(self.__alunos) == 0:
+        if len(self.__aluno_DAO.get_all()) == 0:
             self.__tela_aluno.mostra_mensagem("ATENÇÃO: Não existe alunos cadastrados\n")
             return None
         else:
             self.__tela_aluno.mostra_mensagem("---------- LISTA DE ALUNOS ----------")
-            for aluno in self.__alunos:
+            for aluno in self.__aluno_DAO.get_all():
                 #Não fiz o tratamento aqui pois se estivesse errado ele não passario do "pega_dados_aluno"
                 self.__tela_aluno.mostra_aluno({"nome": aluno.nome, "sexo": aluno.sexo, "cpf": aluno.cpf, "plano": aluno.plano})
             return True
