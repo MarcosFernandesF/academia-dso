@@ -57,7 +57,7 @@ class ControladorInstrutor():
                 instrutor.cpf = novos_dados_instrutor["cpf"] # Não pode alterar o cpf para funcionar
                 instrutor.cref = novos_dados_instrutor["cref"]
 
-                self.__instrutor_DAO.update(instrutor)
+                self.__instrutor_DAO.update(cpf_instrutor, instrutor)
 
         except TypeError as e:
             self.__tela_instrutor.mostra_mensagem(e)
@@ -109,12 +109,12 @@ class ControladorInstrutor():
                 cpf_aluno =  tela_aluno.seleciona_aluno()
                 aluno = controlador_aluno.pega_aluno_por_cpf(cpf_aluno)
 
-                for aluno in instrutor.aluno_DAO.get_all():
+                for aluno in instrutor.aluno_instrutor_DAO.get_all():
                     if cpf_aluno == aluno.cpf:
                         self.__tela_instrutor.mostra_mensagem("Esse aluno ja está vinculado ao instrutor!\n")
                         break
                 else:
-                    instrutor.aluno_DAO = aluno
+                    instrutor.aluno_instrutor_DAO.add(aluno)
                     self.__tela_instrutor.mostra_mensagem("Aluno vinculado com sucesso!\n")
 
         except ValueError as e:
@@ -126,7 +126,7 @@ class ControladorInstrutor():
             controlador_aluno = self.__controlador_sistema.controlador_aluno
             tela_aluno = controlador_aluno.tela_aluno
 
-            if (len(self.instrutores) != 0):
+            if (len(self.__instrutor_DAO.get_all()) != 0):
                 
                 instrutor = self.lista_alunos_vinculados()
 
@@ -138,7 +138,7 @@ class ControladorInstrutor():
                 cpf_aluno = tela_aluno.seleciona_aluno()
                 aluno = controlador_aluno.pega_aluno_por_cpf(cpf_aluno)
 
-                instrutor.alunos.remove(aluno)
+                instrutor.aluno_instrutor_DAO.remove(aluno)
                 self.__tela_instrutor.mostra_mensagem("Aluno desvinculado com sucesso!\n")
 
         except ValueError as e:
@@ -149,18 +149,16 @@ class ControladorInstrutor():
 
     def lista_alunos_vinculados(self):
         try:
-            controlador_aluno = self.__controlador_sistema.controlador_aluno
-
             if (len(self.__instrutor_DAO.get_all()) != 0):
                 self.lista_instrutores()
                 cpf_instrutor = self.__tela_instrutor.seleciona_instrutor()
                 instrutor = self.pega_instrutor_por_cpf(cpf_instrutor)
 
-                if len(instrutor.aluno_DAO.get_all()) == 0:
+                if len(instrutor.aluno_instrutor_DAO.get_all()) == 0:
                     self.__tela_instrutor.mostra_mensagem("ATENÇÃO: Não existe alunos vinculados!\n")
                 else:
                     self.__tela_instrutor.mostra_mensagem("---------- LISTA DE ALUNOS VINCULADOS ----------")
-                    for aluno in instrutor.aluno_DAO.get_all():
+                    for aluno in instrutor.aluno_instrutor_DAO.get_all():
                         self.__controlador_sistema.controlador_aluno.tela_aluno.mostra_aluno({"nome": aluno.nome, "sexo": aluno.sexo, "cpf": aluno.cpf, "plano": aluno.plano})
                 return instrutor
 

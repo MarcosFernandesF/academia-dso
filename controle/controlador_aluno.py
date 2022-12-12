@@ -16,17 +16,11 @@ class ControladorAluno():
         return self.__tela_aluno
 
     def verifica_plano(self, lista_de_planos: list, dados_aluno: dict):
-        if (dados_aluno["plano"]) == "Mensal":
-            plano = lista_de_planos[0]
-            return plano
+        for plano in lista_de_planos.get_all():
+            if plano.nome == dados_aluno["plano"]:
+                return plano
 
-        if (dados_aluno["plano"]) == "Semestral":
-            plano = lista_de_planos[1]
-            return plano
-
-        if (dados_aluno["plano"]) == "Anual":
-            plano = lista_de_planos[2]
-            return plano
+        return None
 
     def pega_aluno_por_cpf(self, cpf: str):
         for aluno in self.__aluno_DAO.get_all():
@@ -37,12 +31,14 @@ class ControladorAluno():
 
     def incluir_aluno(self):
         try:
-            controlador_plano = self.__controlador_sistema.controlador_plano
-            lista_de_planos = controlador_plano.planos
+            lista_de_planos = self.__controlador_sistema.controlador_plano.plano_DAO
 
             dados_aluno = self.__tela_aluno.pega_dados_aluno()
 
             dados_aluno["plano"] = self.verifica_plano(lista_de_planos, dados_aluno)
+
+            if dados_aluno["plano"] is None:
+                raise ValueError("Nenhum plano com este nome foi encontrado")
 
             for aluno in self.__aluno_DAO.get_all():
                 if dados_aluno["cpf"] == aluno.cpf:
@@ -61,8 +57,9 @@ class ControladorAluno():
         except ValueError as e:
             self.__tela_aluno.mostra_mensagem(e)
             self.__tela_aluno.mostra_mensagem(">>>A entrada 'Sexo' ou o 'Plano' foram escritos de maneira errada!")          
+            self.__tela_aluno.mostra_mensagem(">>>Verificar a lista de planos!")
             self.__tela_aluno.mostra_mensagem(">>>Maneira Correta: Masculino / Feminino")
-            self.__tela_aluno.mostra_mensagem(">>>Maneira Correta: Mensal / Semestral / Anual\n")
+            
 
     def alterar_aluno(self):
         try:
@@ -71,20 +68,28 @@ class ControladorAluno():
                 aluno = self.pega_aluno_por_cpf(cpf_aluno)
 
                 novos_dados_aluno = self.__tela_aluno.pega_dados_aluno()
-                lista_de_planos = self.__controlador_sistema.controlador_plano.planos
+                lista_de_planos = self.__controlador_sistema.controlador_plano.plano_DAO
 
                 novos_dados_aluno["plano"] = self.verifica_plano(lista_de_planos, novos_dados_aluno)
 
-                aluno.nome = novos_dados_aluno["nome"]
-                aluno.sexo = novos_dados_aluno["sexo"]
-                aluno.cpf = novos_dados_aluno["cpf"]
-                aluno.plano = novos_dados_aluno["plano"]
-                self.__aluno_DAO.update(aluno)
+                for aluno in self.__aluno_DAO.get_all():
+                    if novos_dados_aluno["cpf"] == aluno.cpf:
+                        self.__tela_aluno.mostra_mensagem("Já existe um aluno com este CPF!\n")
+                        break
+                else:
+                    aluno.nome = novos_dados_aluno["nome"]
+                    aluno.sexo = novos_dados_aluno["sexo"]
+                    aluno.cpf = novos_dados_aluno["cpf"]
+                    aluno.plano = novos_dados_aluno["plano"]
+                    self.__aluno_DAO.update(cpf_aluno, aluno)
 
         except ValueError as e:
             self.__tela_aluno.mostra_mensagem(e)
             self.__tela_aluno.mostra_mensagem(">>>Entrada Inválida!")          
             self.__tela_aluno.mostra_mensagem(">>>Escreva a entrada de maneira correta!\n")
+        except TypeError as e:
+            self.__tela_aluno.mostra_mensagem(e)
+            self.__tela_aluno.mostra_mensagem(">>>O plano digitado é nulo")
 
     def excluir_aluno(self):
         try:

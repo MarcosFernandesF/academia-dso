@@ -1,5 +1,6 @@
 import pickle
 from abc import ABC, abstractmethod
+import entidade
 
 class DAO(ABC):
     @abstractmethod
@@ -25,11 +26,16 @@ class DAO(ABC):
     def update(self, key, obj):
         try:
             if(self.__cache[key] != None):
-                self.__cache[key] = obj #atualiza a entrada
-                self.__dump()  #atualiza o arquivo
-                print("passou update")
+                if isinstance(obj, entidade.instrutor.Instrutor) or isinstance(obj, entidade.aluno.Aluno):
+                    self.__cache[key] = obj #atualiza a entrada 
+                    self.__cache[obj.cpf] = self.__cache.pop(key) 
+                    self.__dump()  #atualiza o arquivo
+                elif isinstance(obj, entidade.plano.Plano):
+                    self.__cache[key] = obj #atualiza a entrada 
+                    self.__cache[obj.nome] = self.__cache.pop(key) 
+                    self.__dump()  #atualiza o arquivo
         except KeyError:
-            print("erro update")
+            print("Update falhou - KeyError")
 
     def get(self, key):
         try:
@@ -42,7 +48,7 @@ class DAO(ABC):
             self.__cache.pop(key)
             self.__dump() #atualiza o arquivo depois de remover um objeto
         except KeyError:
-            print("erro remove")
+            pass
 
     def get_all(self):
         return self.__cache.values()
