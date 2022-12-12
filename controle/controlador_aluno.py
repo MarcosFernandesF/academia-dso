@@ -2,6 +2,7 @@ from limite.tela_aluno import TelaAluno
 from entidade.aluno import Aluno
 from DAOs.aluno_dao import AlunoDAO
 from exception.menu_not_found_error import MenuNotFoundError
+from exception.cpf_not_found_error import CpfNotFoundError
 
 class ControladorAluno():
     
@@ -28,7 +29,7 @@ class ControladorAluno():
             if(aluno.cpf == cpf):
                 return aluno
         else:
-            raise ValueError(">>>Ocorreu uma exceção ValueError")
+            raise CpfNotFoundError(">>>Ocorreu uma exceção CpfNotFoundError")
 
     def incluir_aluno(self):
         try:
@@ -60,6 +61,8 @@ class ControladorAluno():
             self.__tela_aluno.mostra_mensagem(">>>A entrada 'Sexo' ou o 'Plano' foram escritos de maneira errada!")          
             self.__tela_aluno.mostra_mensagem(">>>Verificar a lista de planos!")
             self.__tela_aluno.mostra_mensagem(">>>Maneira Correta: Masculino / Feminino")
+        except CpfNotFoundError as e:
+            self.__tela_aluno.mostra_mensagem(e)
             
 
     def alterar_aluno(self):
@@ -86,11 +89,13 @@ class ControladorAluno():
 
         except ValueError as e:
             self.__tela_aluno.mostra_mensagem(e)
-            self.__tela_aluno.mostra_mensagem(">>>Entrada Inválida!")          
-            self.__tela_aluno.mostra_mensagem(">>>Escreva a entrada de maneira correta!\n")
+            self.__tela_aluno.mostra_mensagem(">>>Entrada Inválida para o sexo!")          
+            self.__tela_aluno.mostra_mensagem(">>>Maneira correta: Masculino / Feminino\n")
         except TypeError as e:
             self.__tela_aluno.mostra_mensagem(e)
             self.__tela_aluno.mostra_mensagem(">>>O plano digitado é nulo")
+        except CpfNotFoundError as e:
+            self.__tela_aluno.mostra_mensagem(e)
 
     def excluir_aluno(self):
         try:
@@ -101,9 +106,8 @@ class ControladorAluno():
                 self.__aluno_DAO.remove(aluno.cpf)
                 self.__tela_aluno.mostra_mensagem("Aluno removido com sucesso! \n")
 
-        except ValueError as e:
+        except CpfNotFoundError as e:
             self.__tela_aluno.mostra_mensagem(e)
-            self.__tela_aluno.mostra_mensagem(">>>Não há nenhum instrutor com este CPF!\n") 
 
     def lista_alunos(self):
         if len(self.__aluno_DAO.get_all()) == 0:
