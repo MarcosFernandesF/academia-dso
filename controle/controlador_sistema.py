@@ -73,9 +73,8 @@ class ControladorSistema():
                 opcao = self.__tela_sistema.mostra_tela_opcoes()
                 funcao_escolhida = lista_opcoes[opcao]
                 funcao_escolhida()
-            except ValueError as e:
+            except ModuleNotFoundError as e:
                 self.__tela_sistema.mostra_mensagem(e)
-                self.__tela_sistema.mostra_mensagem(">>>O valor digitado não corresponde as opções\n")
     
     def encerra_sistema(self):
         exit(0)

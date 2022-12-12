@@ -1,4 +1,10 @@
-class TelaAparelho():
+from exception.menu_not_found_error import MenuNotFoundError
+from limite.tela import Tela
+
+class TelaAparelho(Tela):
+
+    def __init__(self):
+        super().__init__()
 
     def mostra_tela_opcoes(self):
         print("\n<--------- MENU APARELHOS --------->")
@@ -7,5 +13,5 @@ class TelaAparelho():
         opcao = int(input("Escolha a opção: "))
 
         if opcao != 1 and opcao != 0:
-            raise ValueError(">>>Ocorreu uma exceção ValueError")  
+            raise MenuNotFoundError(">>>Ocorreu uma exceção MenuNotFoundError")  
         return opcao

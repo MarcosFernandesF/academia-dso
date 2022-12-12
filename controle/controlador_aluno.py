@@ -1,6 +1,7 @@
 from limite.tela_aluno import TelaAluno
 from entidade.aluno import Aluno
 from DAOs.aluno_dao import AlunoDAO
+from exception.menu_not_found_error import MenuNotFoundError
 
 class ControladorAluno():
     
@@ -124,6 +125,5 @@ class ControladorAluno():
         while (True):
             try:
                 lista_opcoes[self.__tela_aluno.tela_opcoes()]()
-            except ValueError as e:
+            except MenuNotFoundError as e:
                 self.__tela_aluno.mostra_mensagem(e)
-                self.__tela_aluno.mostra_mensagem(">>>O valor digitado não corresponde as opções\n")
