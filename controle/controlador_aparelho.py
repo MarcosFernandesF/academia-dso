@@ -1,5 +1,6 @@
 from limite.tela_aparelho import TelaAparelho
 from entidade.aparelho import Aparelho
+from exception.menu_not_found_error import MenuNotFoundError
 
 class ControladorAparelhos():
 
@@ -68,6 +69,9 @@ class ControladorAparelhos():
             }
 
         while True:
-            opcao = self.__tela_aparelho.mostra_tela_opcoes()
-            funcao_escolhida = switcher[opcao]
-            funcao_escolhida()
+            try:
+                opcao = self.__tela_aparelhos.mostra_tela_opcoes()
+                funcao_escolhida = switcher[opcao]
+                funcao_escolhida()
+            except MenuNotFoundError as e:
+                self.__tela_aparelhos.mostra_mensagem(e)

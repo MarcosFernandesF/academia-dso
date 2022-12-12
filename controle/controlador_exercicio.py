@@ -1,5 +1,6 @@
 from limite.tela_exercicio import TelaExercicio
 from entidade.exercicio import Exercicio
+from exception.menu_not_found_error import MenuNotFoundError
 
 class ControladorExercicio():
 
@@ -99,7 +100,6 @@ class ControladorExercicio():
         while (True):
             try:
                 lista_opcoes[self.__tela_exercicio.tela_opcoes()]()
-            except ValueError as e:
+            except MenuNotFoundError as e:
                 self.__tela_exercicio.mostra_mensagem(e)
-                self.__tela_exercicio.mostra_mensagem(">>>O valor digitado não corresponde as opções\n")
 

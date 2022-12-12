@@ -1,4 +1,5 @@
 from limite.tela import Tela
+from exception.menu_not_found_error import MenuNotFoundError
 
 class TelaExercicio(Tela):
 
@@ -17,7 +18,7 @@ class TelaExercicio(Tela):
         print("")
 
         if opcao > 4 or opcao < 0:
-            raise ValueError(">>>Ocorreu uma exceção ValueError")
+            raise MenuNotFoundError(">>>Ocorreu uma exceção MenuNotFoundError")
 
         return opcao
     

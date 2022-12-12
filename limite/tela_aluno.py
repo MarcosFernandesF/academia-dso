@@ -1,4 +1,5 @@
 from limite.tela import Tela
+from exception.menu_not_found_error import MenuNotFoundError
 
 class TelaAluno(Tela):
     
@@ -18,7 +19,7 @@ class TelaAluno(Tela):
         print("")
 
         if opcao != 1 and opcao != 2 and opcao != 3 and opcao != 4 and opcao != 0:
-            raise ValueError(">>>Ocorreu uma exceção ValueError")
+            raise MenuNotFoundError(">>>Ocorreu uma exceção MenuNotFoundError")
             
         return opcao
 
@@ -34,11 +35,11 @@ class TelaAluno(Tela):
         nome = input("Nome: ")
         sexo = input("Sexo[Masculino/Feminino]: ")
         cpf = input("CPF: ")
-        plano = input("Plano[Mensal, Semestral, Anual]: ")
+        plano = input("Plano: ")
         print("")
 
         if isinstance(nome, str) and isinstance(sexo, str) and isinstance(cpf, str):
-            if (sexo == "Masculino" or sexo == "Feminino") and (plano == "Mensal" or plano == "Semestral" or plano == "Anual"):
+            if (sexo == "Masculino" or sexo == "Feminino"):
                 return {"nome": nome, "sexo": sexo, "cpf": cpf, "plano": plano}
             else:
                 raise ValueError(">>>Ocorreu uma exceção ValueError")

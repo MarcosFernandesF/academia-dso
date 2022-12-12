@@ -1,5 +1,6 @@
 from limite.tela_treino import TelaTreino
 from entidade.treino import Treino
+from exception.menu_not_found_error import MenuNotFoundError
 
 class ControladorTreino():
 
@@ -89,6 +90,9 @@ class ControladorTreino():
             0: self.finalizar, 1: self.criar_Treino, 2: self.modificar_treino, 3:self.remover_treino, 4: self.listar_treino}
 
         while True:
-            opcao = self.__tela_Treino.mostra_tela_opcoes()
-            funcao_escolhida = switcher[opcao]
-            funcao_escolhida()
+            try:
+                opcao = self.__tela_Treino.mostra_tela_opcoes()
+                funcao_escolhida = switcher[opcao]
+                funcao_escolhida()
+            except MenuNotFoundError as e:
+                self.__tela_Treino.mostra_mensagem(e)

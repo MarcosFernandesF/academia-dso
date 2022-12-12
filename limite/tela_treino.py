@@ -1,7 +1,11 @@
 from entidade import exercicio
+from exception.menu_not_found_error import MenuNotFoundError
+from limite.tela import Tela
 
+class TelaTreino(Tela):
 
-class TelaTreino():
+    def __init__(self):
+        super().__init__()
 
     def mostra_tela_opcoes(self):
         print("=========== CADASTRO TREINO =============")
@@ -12,8 +16,8 @@ class TelaTreino():
         print("0 - Voltar")
         opcao = int(input("Escolha a opção: "))
 
-        if opcao != 1 and opcao != 2 and opcao != 3 and opcao != 4  and opcao != 0:
-            raise ValueError(">>>Ocorreu uma exceção ValueError")
+        if opcao != 1 and opcao != 2 and opcao != 3 and opcao != 4 and opcao != 0:
+            raise MenuNotFoundError(">>>Ocorreu uma exceção MenuNotFoundError")
         return opcao
 
     def seleciona_exercicio(self):

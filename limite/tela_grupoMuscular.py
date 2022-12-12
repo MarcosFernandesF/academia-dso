@@ -1,4 +1,10 @@
-class TelaGrupoMuscular():
+from exception.menu_not_found_error import MenuNotFoundError
+from limite.tela import Tela
+
+class TelaGrupoMuscular(Tela):
+
+    def __init__(self):
+        super().__init__()
 
     def mostra_tela_opcoes(self):
         print("=========== CADASTRO EXERCICIO - GRUPO MUSCULAR=============")
@@ -13,7 +19,7 @@ class TelaGrupoMuscular():
         opcao = int(input("Escolha a opção: "))
 
         if opcao < 0 or opcao > 7:
-            raise ValueError(">>>Ocorreu uma exceção ValueError")
+            raise MenuNotFoundError(">>>Ocorreu uma exceção MenuNotFoundError")
         return opcao
 
     def seleciona_exercicio(self):

@@ -1,5 +1,6 @@
 from limite.tela_grupoMuscular import TelaGrupoMuscular
 from entidade.grupoMuscular import GrupoMuscular
+from exception.menu_not_found_error import MenuNotFoundError
 
 class ControladorGrupoMuscular():
 
@@ -98,6 +99,9 @@ class ControladorGrupoMuscular():
             }
 
         while True:
-            opcao = self.__tela_grupoMuscular.mostra_tela_opcoes()
-            funcao_escolhida = switcher[opcao]
-            funcao_escolhida()
+            try:
+                opcao = self.__tela_grupoMuscular.mostra_tela_opcoes()
+                funcao_escolhida = switcher[opcao]
+                funcao_escolhida()
+            except MenuNotFoundError as e:
+                self.__tela_grupoMuscular.mostra_mensagem(e)

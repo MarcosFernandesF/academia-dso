@@ -1,6 +1,8 @@
 from limite.tela_instrutor import TelaInstrutor
 from entidade.instrutor import Instrutor
 from DAOs.instrutor_dao import instrutorDAO
+from exception.menu_not_found_error import MenuNotFoundError
+from exception.cpf_not_found_error import CpfNotFoundError
 
 class ControladorInstrutor():
     
@@ -16,7 +18,7 @@ class ControladorInstrutor():
             if(instrutor.cpf == cpf):
                 return instrutor
         else:
-            raise ValueError(">>>Ocorreu uma exceção ValueError")
+            raise CpfNotFoundError(">>>Ocorreu uma exceção CpfNotFoundError")
     
     def pega_instrutor_por_cref(self, cref: str):
         for instrutor in self.__instrutor_DAO.get_all():
@@ -57,7 +59,7 @@ class ControladorInstrutor():
                 instrutor.cpf = novos_dados_instrutor["cpf"] # Não pode alterar o cpf para funcionar
                 instrutor.cref = novos_dados_instrutor["cref"]
 
-                self.__instrutor_DAO.update(instrutor)
+                self.__instrutor_DAO.update(cpf_instrutor, instrutor)
 
         except TypeError as e:
             self.__tela_instrutor.mostra_mensagem(e)
@@ -65,8 +67,10 @@ class ControladorInstrutor():
             self.__tela_instrutor.mostra_mensagem(">>>CPF[str]\n") 
         except ValueError as e:
             self.__tela_instrutor.mostra_mensagem(e)
-            self.__tela_instrutor.mostra_mensagem(">>>Entrada Inválida!")          
-            self.__tela_instrutor.mostra_mensagem(">>>Escreva a entrada de maneira correta!\n")
+            self.__tela_instrutor.mostra_mensagem(">>>Entrada Inválida para o sexo!")          
+            self.__tela_instrutor.mostra_mensagem(">>>Maneira correta: Masculino / Feminino\n")
+        except CpfNotFoundError as e:
+            self.__tela_instrutor.mostra_mensagem(e)
 
     def excluir_instrutor(self):
         try:
@@ -77,10 +81,9 @@ class ControladorInstrutor():
                 self.__instrutor_DAO.remove(instrutor.cpf)
                 self.lista_instrutores()
 
-        except ValueError as e:
+        except CpfNotFoundError as e:
             self.__tela_instrutor.mostra_mensagem(e)
-            self.__tela_instrutor.mostra_mensagem(">>>Não há nenhum instrutor com este CPF!\n") 
-
+            
     def lista_instrutores(self):
         if len(self.__instrutor_DAO.get_all()) == 0:
                 self.__tela_instrutor.mostra_mensagem("ATENÇÃO: Não existe instrutores\n")
@@ -109,24 +112,23 @@ class ControladorInstrutor():
                 cpf_aluno =  tela_aluno.seleciona_aluno()
                 aluno = controlador_aluno.pega_aluno_por_cpf(cpf_aluno)
 
-                for aluno in instrutor.aluno_DAO.get_all():
+                for aluno in instrutor.aluno_instrutor_DAO.get_all():
                     if cpf_aluno == aluno.cpf:
                         self.__tela_instrutor.mostra_mensagem("Esse aluno ja está vinculado ao instrutor!\n")
                         break
                 else:
-                    instrutor.aluno_DAO = aluno
+                    instrutor.aluno_instrutor_DAO.add(aluno)
                     self.__tela_instrutor.mostra_mensagem("Aluno vinculado com sucesso!\n")
 
-        except ValueError as e:
+        except CpfNotFoundError as e:
             self.__tela_instrutor.mostra_mensagem(e)
-            self.__tela_instrutor.mostra_mensagem(">>>Instrutor ou Aluno com CPF inválido!\n")
 
     def desvincular_aluno(self):
         try:
             controlador_aluno = self.__controlador_sistema.controlador_aluno
             tela_aluno = controlador_aluno.tela_aluno
 
-            if (len(self.instrutores) != 0):
+            if (len(self.__instrutor_DAO.get_all()) != 0):
                 
                 instrutor = self.lista_alunos_vinculados()
 
@@ -138,37 +140,33 @@ class ControladorInstrutor():
                 cpf_aluno = tela_aluno.seleciona_aluno()
                 aluno = controlador_aluno.pega_aluno_por_cpf(cpf_aluno)
 
-                instrutor.alunos.remove(aluno)
+                instrutor.aluno_instrutor_DAO.remove(aluno)
                 self.__tela_instrutor.mostra_mensagem("Aluno desvinculado com sucesso!\n")
 
-        except ValueError as e:
+        except CpfNotFoundError as e:
             self.__tela_instrutor.mostra_mensagem(e)
-            self.__tela_instrutor.mostra_mensagem(">>>Instrutor ou Aluno com CPF inválido!\n")
         except TypeError as e:
             self.__tela_instrutor.mostra_mensagem(e)
 
     def lista_alunos_vinculados(self):
         try:
-            controlador_aluno = self.__controlador_sistema.controlador_aluno
-
             if (len(self.__instrutor_DAO.get_all()) != 0):
                 self.lista_instrutores()
                 cpf_instrutor = self.__tela_instrutor.seleciona_instrutor()
                 instrutor = self.pega_instrutor_por_cpf(cpf_instrutor)
 
-                if len(instrutor.aluno_DAO.get_all()) == 0:
+                if len(instrutor.aluno_instrutor_DAO.get_all()) == 0:
                     self.__tela_instrutor.mostra_mensagem("ATENÇÃO: Não existe alunos vinculados!\n")
                 else:
                     self.__tela_instrutor.mostra_mensagem("---------- LISTA DE ALUNOS VINCULADOS ----------")
-                    for aluno in instrutor.aluno_DAO.get_all():
+                    for aluno in instrutor.aluno_instrutor_DAO.get_all():
                         self.__controlador_sistema.controlador_aluno.tela_aluno.mostra_aluno({"nome": aluno.nome, "sexo": aluno.sexo, "cpf": aluno.cpf, "plano": aluno.plano})
                 return instrutor
 
             return None
 
-        except ValueError as e:
+        except CpfNotFoundError as e:
             self.__tela_instrutor.mostra_mensagem(e)
-            self.__tela_instrutor.mostra_mensagem(">>>Instrutor ou Aluno com CPF inválido!\n")
 
 
     def retornar(self):
@@ -180,6 +178,5 @@ class ControladorInstrutor():
         while (True):
             try:
                 lista_opcoes[self.__tela_instrutor.tela_opcoes()]()
-            except ValueError as e:
+            except MenuNotFoundError as e:
                 self.__tela_instrutor.mostra_mensagem(e)
-                self.__tela_instrutor.mostra_mensagem(">>>O valor digitado não corresponde as opções\n")
