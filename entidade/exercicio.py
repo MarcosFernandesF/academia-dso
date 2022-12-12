@@ -6,7 +6,7 @@ class Exercicio:
         if isinstance(nome, str):
             self.__nome = nome
         if isinstance(aparelho, Aparelho):
-            self.__aparelho = Aparelho
+            self.__aparelho = aparelho
         if isinstance(id_exercicio, str):
             self.__id_exercicio = id_exercicio
         

@@ -26,7 +26,7 @@ class ControladorGrupoMuscular():
             if (grupo.id == id):
                 return grupo
         else:
-            print("Grupo não existente")
+            self.__tela_grupoMuscular.mostra_mensagem("Grupo não existente")
             return None
 
     def pega_exercicio_por_id(self, id: str):
@@ -54,7 +54,7 @@ class ControladorGrupoMuscular():
         self.__gruposmusculares[grupo_escolhido].remove(exercicio_selecionado)
 
     def listar_grupos(self):
-        print("\nGrupos Musculares cadastrados:")
+        self.__tela_grupoMuscular.mostra_mensagem("\nGrupos Musculares cadastrados:")
         for i in self.__gruposmusculares.keys():
             self.__tela_grupoMuscular.mostra_grupo_muscular(i)
 
@@ -63,9 +63,9 @@ class ControladorGrupoMuscular():
         grupo_selecionado = self.pega_grupo_muscular_por_id(id)
         for grupo in self.__gruposmusculares.keys():
             if (grupo == grupo_selecionado):
-                print(f"\nExercicios cadastrados no grupo {grupo_selecionado.nome}:")
+                self.__tela_grupoMuscular.mostra_mensagem(f"\nExercicios cadastrados no grupo {grupo_selecionado.nome}:")
                 for i in range(len(self.__gruposmusculares[grupo_selecionado])):
-                    print(f"Exercício {i}: {self.__gruposmusculares[grupo_selecionado][i]}")
+                    self.__tela_grupoMuscular.mostra_mensagem(f"Exercício {i}: {self.__gruposmusculares[grupo_selecionado][i]}")
 
     def modificar_grupo(self):
         id = self.__tela_grupoMuscular.pega_id_grupo_muscular()
@@ -81,7 +81,7 @@ class ControladorGrupoMuscular():
         for grupo in list(self.__gruposmusculares.keys()):
             if (grupo == grupo_selecionado):
                 del self.__gruposmusculares[grupo_selecionado]
-                print("Exclusão feita com sucesso!\n")
+                self.__tela_grupoMuscular.mostra_mensagem("Exclusão feita com sucesso!\n")
 
     def finalizar(self):
         self.__controlador_sistema.abre_tela_inicial()

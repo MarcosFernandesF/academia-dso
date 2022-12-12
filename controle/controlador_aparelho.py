@@ -13,48 +13,57 @@ class ControladorAparelhos():
         self.abre_tela_inicial()
 
     def criar_aparelho(self):
-        dados_aparelho = self.__tela_aparelho.pega_dados_aparelho()
-        aparelho_criado = Aparelho(dados_aparelho["Nome"], self.__controlador_sistema.cria_id())
-        self.__aparelhos.append(aparelho_criado)
-        print("Aparelho criado com sucesso!")
+        try:
+            dados_aparelho = self.__tela_aparelho.pega_dados_aparelho()
+            aparelho_criado = Aparelho(dados_aparelho["Nome"], self.__controlador_sistema.cria_id())
+            self.__aparelhos.append(aparelho_criado)
+            self.__tela_aparelho.mostra_mensagem("Aparelho criado com sucesso!")
+        except TypeError as e:
+            self.__tela_aparelho.mostra_mensagem(e)
+            self.__tela_aparelho.mostra_mensagem("Entrada com tipo inválido!")
     
     def modificar_aparelho(self):
-        id = self.__tela_aparelho.pega_id_aparelho()
-        aparelho_selecionado = self.pega_aparelho_por_id(id)
-        for aparelho in self.__aparelhos.copy():
-            if (aparelho == aparelho_selecionado):
-                novos_dados = self.__tela_aparelho.pega_dados_aparelho()
-                aparelho.nome = novos_dados["Nome"]
-                print("Nome modificado com sucesso!")
-    
-    def excluir_aparelho(self):
-        id = self.__tela_aparelho.pega_id_aparelho()
-        aparelho_selecionado = self.pega_aparelho_por_id(id)
-        for aparelho in self.__aparelhos.copy():
-            if (aparelho == aparelho_selecionado):
-                self.__aparelhos.remove(aparelho)
-                print("Aparelho deletado com sucesso!")
-
-    def listar_aparelhos(self):
-        if len(self.__aparelhos) > 0:
-            print("\nAparelhos cadastrados:")
-            for aparelho in self.__aparelhos:
-                print(f"Nome: {aparelho.nome} | ID: {aparelho.id}")
-        else:
-            print("Nenhum aparelho cadastrado!")
-
-    def pega_aparelho_por_id(self, id: str):
         try:
-            if len(self.__aparelhos) == 0:
-                return False
-            for aparelho in self.__aparelhos:
-                if(aparelho.id == id):
-                    return aparelho
-            return False
-            
+            id = self.__tela_aparelho.pega_id_aparelho()
+            aparelho_selecionado = self.pega_aparelho_por_id(id)
+            for aparelho in self.__aparelhos.copy():
+                if (aparelho == aparelho_selecionado):
+                    novos_dados = self.__tela_aparelho.pega_dados_aparelho()
+                    aparelho.nome = novos_dados["Nome"]
+                    self.__tela_aparelho.mostra_mensagem("Nome modificado com sucesso!")
         except ValueError as e:
             self.__tela_aparelho.mostra_mensagem(e)
             self.__tela_aparelho.mostra_mensagem(">>>Não existe Aparelho com este ID")
+    
+    def excluir_aparelho(self):
+        try:
+            id = self.__tela_aparelho.pega_id_aparelho()
+            aparelho_selecionado = self.pega_aparelho_por_id(id)
+            for aparelho in self.__aparelhos.copy():
+                if (aparelho == aparelho_selecionado):
+                    self.__aparelhos.remove(aparelho)
+                    self.__tela_aparelho.mostra_mensagem("Aparelho deletado com sucesso!")
+        except ValueError as e:
+            self.__tela_aparelho.mostra_mensagem(e)
+            self.__tela_aparelho.mostra_mensagem(">>>Não existe Aparelho com este ID")
+
+
+    def listar_aparelhos(self):
+        if len(self.__aparelhos) > 0:
+            self.__tela_aparelho.mostra_mensagem("\nAparelhos cadastrados:")
+            for aparelho in self.__aparelhos:
+                self.__tela_aparelho.mostra_mensagem(f"Nome: {aparelho.nome} | ID: {aparelho.id}")
+        else:
+            self.__tela_aparelho.mostra_mensagem("Nenhum aparelho cadastrado!")
+
+    def pega_aparelho_por_id(self, id: str):
+        if len(self.__aparelhos) == 0:
+            return False
+        for aparelho in self.__aparelhos:
+            if(aparelho.id == id):
+                return aparelho
+        else:
+            raise ValueError(">>>Ocorre uma exceção ValueError")
 
     def finalizar(self):
         self.__controlador_sistema.abre_tela_inicial()
@@ -70,8 +79,8 @@ class ControladorAparelhos():
 
         while True:
             try:
-                opcao = self.__tela_aparelhos.mostra_tela_opcoes()
+                opcao = self.__tela_aparelho.mostra_tela_opcoes()
                 funcao_escolhida = switcher[opcao]
                 funcao_escolhida()
             except MenuNotFoundError as e:
-                self.__tela_aparelhos.mostra_mensagem(e)
+                self.__tela_aparelho.mostra_mensagem(e)
