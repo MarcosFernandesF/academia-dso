@@ -38,11 +38,11 @@ class TelaExercicio(Tela):
         print("")           
     
     def seleciona_exercicio(self):
-        id_exercicio = input ("ID do Exercício: ")
+        id_exercicio = int(input("ID do Exercício: "))
         print("")
 
         if isinstance(id_exercicio, int):
-            return id_exercicio
+            return str(id_exercicio)
         else:
             raise TypeError(">>>Ocorreu uma exceção TypeError")
     
