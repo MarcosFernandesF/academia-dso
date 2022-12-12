@@ -80,10 +80,10 @@ class ControladorExercicio():
         else:
             self.__tela_exercicio.mostra_mensagem("-------- LISTA DE EXERCÍCIOS --------")
             for exercicio in self.__exercicios:
-                print("============")
-                print(f"Nome do exercício: {exercicio.nome}")
-                print(f"ID do exercício: {exercicio.id_exercicio}")
-                print(f"ID do aparelho utilizado: {exercicio.aparelho.id}\n")
+                self.__tela_exercicio.mostra_mensagem("============")
+                self.__tela_exercicio.mostra_mensagem(f"Nome do exercício: {exercicio.nome}")
+                self.__tela_exercicio.mostra_mensagem(f"ID do exercício: {exercicio.id_exercicio}")
+                self.__tela_exercicio.mostra_mensagem(f"ID do aparelho utilizado: {exercicio.aparelho.id}\n")
         
     def retornar(self):
         self.__controlador_sistema.abre_tela_inicial()

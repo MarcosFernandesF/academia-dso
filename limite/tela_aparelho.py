@@ -14,6 +14,7 @@ class TelaAparelho(Tela):
         print("4 - Excluir aparelho")
         print("0 - Voltar") 
         opcao = int(input("Escolha a opção: "))
+        print("")
 
         if opcao < 0 or opcao > 4:
             raise MenuNotFoundError(">>>Ocorreu uma exceção MenuNotFoundError")
@@ -31,4 +32,5 @@ class TelaAparelho(Tela):
     
     def pega_id_aparelho(self):
         id = input("Digite o ID do aparelho: ")
+        print("")
         return str(id)

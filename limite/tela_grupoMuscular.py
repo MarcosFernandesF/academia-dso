@@ -44,5 +44,5 @@ class TelaGrupoMuscular(Tela):
             raise TypeError(">>>Ocorreu uma exceção TypeError")
     
     def mostra_grupo_muscular(self, grupo):
-        print(f"Nome: {grupo.nome} | ID: {grupo.id}")
+        print(f"Nome: {grupo.nome} | ID: {grupo.id}\n")
     
