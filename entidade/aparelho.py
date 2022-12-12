@@ -9,10 +9,18 @@ class Aparelho:
     @property
     def nome(self) -> str:
         return self.__nome
+    
+    @nome.setter
+    def nome(self, nome):
+        self.__nome = nome
 
     @property
     def exercicios(self) -> list:
         return self.__exercicios
+    
+    @exercicios.setter
+    def exercicios(self, exercicios):
+        self.__exercicios = exercicios
 
     @property
     def id(self) -> str:
