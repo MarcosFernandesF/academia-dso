@@ -1,4 +1,5 @@
 from limite.tela import Tela
+from exception.menu_not_found_error import MenuNotFoundError
 
 class TelaAluno(Tela):
     
@@ -18,7 +19,7 @@ class TelaAluno(Tela):
         print("")
 
         if opcao != 1 and opcao != 2 and opcao != 3 and opcao != 4 and opcao != 0:
-            raise ValueError(">>>Ocorreu uma exceção ValueError")
+            raise MenuNotFoundError(">>>Ocorreu uma exceção MenuNotFoundError")
             
         return opcao
 

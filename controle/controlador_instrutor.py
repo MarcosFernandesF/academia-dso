@@ -1,6 +1,7 @@
 from limite.tela_instrutor import TelaInstrutor
 from entidade.instrutor import Instrutor
 from DAOs.instrutor_dao import instrutorDAO
+from exception.menu_not_found_error import MenuNotFoundError
 
 class ControladorInstrutor():
     
@@ -178,6 +179,5 @@ class ControladorInstrutor():
         while (True):
             try:
                 lista_opcoes[self.__tela_instrutor.tela_opcoes()]()
-            except ValueError as e:
+            except MenuNotFoundError as e:
                 self.__tela_instrutor.mostra_mensagem(e)
-                self.__tela_instrutor.mostra_mensagem(">>>O valor digitado não corresponde as opções\n")
