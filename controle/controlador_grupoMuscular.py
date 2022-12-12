@@ -25,33 +25,35 @@ class ControladorGrupoMuscular():
         for grupo in self.__gruposmusculares.keys():
             if (grupo.id == id):
                 return grupo
-        else:
-            self.__tela_grupoMuscular.mostra_mensagem("Grupo não existente")
-            return None
+        self.__tela_grupoMuscular.mostra_mensagem("Grupo não existente")
+        return None
 
     def pega_exercicio_por_id(self, id: str):
-        controlador_exercicio = self.__controlador_sistema.controlador_exercicio
-        lista_de_exercicios = controlador_exercicio.exercicios
+        lista_de_exercicios =  self.__controlador_sistema.controlador_exercicio.exercicios
         for exercicio in lista_de_exercicios:
             if(exercicio.id_exercicio == id):
                 return exercicio.nome
-            return None
+        return None
 
     def incluir_exercicio(self):
-        self.listar_grupos()
-        id = self.__tela_grupoMuscular.pega_id_grupo_muscular()
-        grupo_escolhido = self.pega_grupo_muscular_por_id(id)
-        codigo_exercicio = self.__tela_grupoMuscular.seleciona_exercicio()
-        exercicio_selecionado = self.pega_exercicio_por_id(codigo_exercicio)
-        self.__gruposmusculares[grupo_escolhido].append(exercicio_selecionado)
+            self.listar_grupos()
+            id = self.__tela_grupoMuscular.pega_id_grupo_muscular()
+            grupo_escolhido = self.pega_grupo_muscular_por_id(id)
+            codigo_exercicio = self.__tela_grupoMuscular.seleciona_exercicio()
+            exercicio_selecionado = self.pega_exercicio_por_id(codigo_exercicio)
+            self.__gruposmusculares[grupo_escolhido].append(exercicio_selecionado)
+            self.__tela_grupoMuscular.mostra_mensagem("Exercicio incluido!")
     
     def retirar_exercicio(self):
-        self.listar_grupos()
-        id = self.__tela_grupoMuscular.pega_id_grupo_muscular()
-        grupo_escolhido = self.pega_grupo_muscular_por_id(id)
-        codigo_exercicio = self.__tela_grupoMuscular.seleciona_exercicio()
-        exercicio_selecionado = self.pega_exercicio_por_id(codigo_exercicio)
-        self.__gruposmusculares[grupo_escolhido].remove(exercicio_selecionado)
+            self.listar_grupos()
+            id = self.__tela_grupoMuscular.pega_id_grupo_muscular()
+            grupo_escolhido = self.pega_grupo_muscular_por_id(id)
+            codigo_exercicio = self.__tela_grupoMuscular.seleciona_exercicio()
+            exercicio_selecionado = self.pega_exercicio_por_id(codigo_exercicio)
+            self.__gruposmusculares[grupo_escolhido].append(exercicio_selecionado)
+            self.__tela_grupoMuscular.mostra_mensagem("Exercicio incluido!")
+            self.__gruposmusculares[grupo_escolhido].remove(exercicio_selecionado)
+            self.__tela_grupoMuscular.mostra_mensagem("Exercicio removido!")
 
     def listar_grupos(self):
         self.__tela_grupoMuscular.mostra_mensagem("\nGrupos Musculares cadastrados:")
