@@ -40,13 +40,6 @@ class ControladorSistema():
     def tela_aparelhos(self):
         self.__controlador_aparelhos.abre_tela_inicial()
 
-    def instancia_aparelhos(self):
-        aparelho_um = self.__controlador_aparelhos.criar_aparelho("Aparelho um", "1")
-        aparelho_dois = self.__controlador_aparelhos.criar_aparelho("Aparelho dois", "2")
-        aparelho_tres = self.__controlador_aparelhos.criar_aparelho("Aparelho três", "3")
-        aparelho_quatro = self.__controlador_aparelhos.criar_aparelho("Aparelho quatro", "4")
-        aparelho_cinco = self.__controlador_aparelhos.criar_aparelho("Aparelho cinco", "5")
-
     def instancia_treino(self):
         treino = self.__controlador_treino.criar_treino()
 
