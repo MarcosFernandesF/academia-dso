@@ -8,10 +8,10 @@ class TelaExercicio(Tela):
 
     def tela_opcoes(self):
         print("------------ MENU EXERCICIOS ------------")
-        print("1 - Incluir Exercício")
-        print("2 - Alterar Exercício")
-        print("3 - Listar Exercícios")
-        print("4 - Excluir Exercício")
+        print("1 - Criar exercício")
+        print("2 - Modificar exercício")
+        print("3 - Listar exercícios")
+        print("4 - Excluir exercício")
         print("0 - Voltar")
 
         opcao = int(input("Escolha a opção: "))
@@ -22,8 +22,6 @@ class TelaExercicio(Tela):
 
         return opcao
     
-    #Fazer um id do aparelho automatico (que incrementa)
-    #Excluir o input do id aparelho.
     def pega_dados_exercicio(self):
         print("-------- DADOS EXERCICIO --------")
         nome = input("Nome: ")
@@ -31,13 +29,11 @@ class TelaExercicio(Tela):
         print("")
 
         if isinstance(nome, str):
-            return {"nome": nome, "id": id}
-        else:
-            raise TypeError(">>>Ocorreu uma exceção TypeError")
+            return {"nome": nome, "id_aparelho": id}
     
     def mostra_exercicio(self, dados_exercicio):
         print("Nome do Exercício: ", dados_exercicio["nome"])
-        print("Aparelho utilizado no Exercício:", dados_exercicio["aparelho"])
+        print("ID do aparelho:", dados_exercicio["aparelho"])
         print("ID do exercício: ", dados_exercicio["id_exercicio"])
         print("")           
     
@@ -49,4 +45,5 @@ class TelaExercicio(Tela):
             return id_exercicio
         else:
             raise TypeError(">>>Ocorreu uma exceção TypeError")
+    
     

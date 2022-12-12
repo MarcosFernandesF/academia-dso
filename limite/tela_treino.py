@@ -12,7 +12,7 @@ class TelaTreino(Tela):
         print("1 - Criar treino")
         print("2 - Alterar treino")
         print("3 - Remover treino")
-        print("3 - Listar treinos")
+        print("4 - Listar treinos")
         print("0 - Voltar")
         opcao = int(input("Escolha a opção: "))
 
@@ -23,7 +23,7 @@ class TelaTreino(Tela):
     def seleciona_exercicio(self):
         id_exercicio = input ("ID do Exercício: ")
         if isinstance(id_exercicio, int):
-            return id_exercicio
+            return str(id_exercicio)
         else:
             raise TypeError(">>>Ocorreu uma exceção TypeError")
 
@@ -33,5 +33,10 @@ class TelaTreino(Tela):
         exercicio = input("ID do exercicio: ") 
         duracao = input("Duração do treino (em minutos): ")
         cref = input("CREF do instrutor: ")
-        id_treino = input("Digite o id do treino:")
-        return {"nome": nome, "id_exercicio": exercicio, "duracao": duracao, "cref": cref, "id_treino": id_treino}
+        return {"nome": nome, "id_exercicio": str(exercicio), "duracao": int(duracao), "cref": str(cref)}
+    
+    def seleciona_treino(self):
+        id_treino = input("Digite o ID do treino: ")
+        print("")
+
+        return str(id_treino)
