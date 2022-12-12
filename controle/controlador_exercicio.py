@@ -22,7 +22,7 @@ class ControladorExercicio():
         for exercicio in self.__exercicios:
             if(exercicio.id_exercicio == id):
                 return exercicio
-        raise ValueError(">>>Ocorreu uma exceção ValueError")
+        return None
 
     def criar_exercicio(self):
         try:
@@ -47,11 +47,17 @@ class ControladorExercicio():
             if len(self.__exercicios) > 0:
                 id_exercicio = self.__tela_exercicio.seleciona_exercicio()
                 exercicio = self.pega_exercicio_por_id(id_exercicio)
+                if exercicio is not None:
+                    novos_dados_exercicio = self.__tela_exercicio.pega_dados_exercicio()
+                    exercicio.aparelho = self.__controlador_sistema.controlador_aparelho.pega_aparelho_por_id(novos_dados_exercicio["id_aparelho"])
+                    if exercicio.aparelho is not None:
+                        exercicio.nome = novos_dados_exercicio["nome"]
+                        self.__tela_exercicio.mostra_mensagem("Exercicio modificado!")
+                    else:
+                        raise ValueError
+                else:
+                    raise ValueError
 
-                novos_dados_exercicio = self.__tela_exercicio.pega_dados_exercicio()
-                exercicio.nome = novos_dados_exercicio["nome"]
-                exercicio.aparelho = novos_dados_exercicio["aparelho"]
-    
         except TypeError as e:
             self.__tela_exercicio.mostra_mensagem(e)
             self.__tela_exercicio.mostra_mensagem(">>>O ID ou nome possui um tipo diferente do que deveria ter!")
@@ -64,8 +70,10 @@ class ControladorExercicio():
         try:
             id_exercicio = self.__tela_exercicio.seleciona_exercicio()
             exercicio = self.pega_exercicio_por_id(id_exercicio)
-            self.__exercicios.remove(exercicio)
-            self.listar_exercicios()
+            if exercicio is not None:
+                self.__exercicios.remove(exercicio)
+                self.__tela_exercicio.mostra_mensagem("Exercício excluído!")
+                self.listar_exercicios()
     
         except TypeError as e:
             self.__tela_exercicio.mostra_mensagem(e)

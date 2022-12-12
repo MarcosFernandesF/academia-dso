@@ -26,8 +26,7 @@ class TelaGrupoMuscular(Tela):
         id_exercicio = input ("ID do Exercício: ")
         if isinstance(id_exercicio, int):
             return id_exercicio
-        else:
-            raise TypeError(">>>Ocorreu uma exceção TypeError")
+        return None
 
     def pega_id_grupo_muscular(self):
         id = input("Digite o ID do grupo muscular: ")
@@ -44,5 +43,5 @@ class TelaGrupoMuscular(Tela):
             raise TypeError(">>>Ocorreu uma exceção TypeError")
     
     def mostra_grupo_muscular(self, grupo):
-        print(f"Nome: {grupo.nome} | ID: {grupo.id}\n")
+        print(f"Nome: {grupo.nome} | ID: {grupo.id}")
     
