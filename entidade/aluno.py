@@ -8,7 +8,9 @@ class Aluno(Pessoa):
             self.__plano = plano
         else:
             raise TypeError(">>>Ocorreu uma exceção TypeError")
-        
+    
+    numero_arquivo = 0
+
     @property
     def plano(self) -> str:
         return self.__plano

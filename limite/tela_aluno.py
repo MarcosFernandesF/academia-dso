@@ -34,11 +34,11 @@ class TelaAluno(Tela):
         nome = input("Nome: ")
         sexo = input("Sexo[Masculino/Feminino]: ")
         cpf = input("CPF: ")
-        plano = input("Plano[Mensal, Semestral, Anual]: ")
+        plano = input("Plano: ")
         print("")
 
         if isinstance(nome, str) and isinstance(sexo, str) and isinstance(cpf, str):
-            if (sexo == "Masculino" or sexo == "Feminino") and (plano == "Mensal" or plano == "Semestral" or plano == "Anual"):
+            if (sexo == "Masculino" or sexo == "Feminino"):
                 return {"nome": nome, "sexo": sexo, "cpf": cpf, "plano": plano}
             else:
                 raise ValueError(">>>Ocorreu uma exceção ValueError")

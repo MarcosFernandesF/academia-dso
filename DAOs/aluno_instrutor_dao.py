@@ -1,9 +1,11 @@
 from DAOs.dao import DAO
 from entidade.aluno import Aluno
 
-class AlunoDAO(DAO):
+class AlunoInstrutorDAO(DAO):
     def __init__(self):
-        super().__init__('alunos.pkl')
+        num_arquivo = str(Aluno.numero_arquivo)
+        super().__init__('alunosinstrutor'+ num_arquivo +'.pkl') 
+        Aluno.numero_arquivo += 1
 
     def add(self, aluno: Aluno):
         if ((aluno is not None) and isinstance(aluno, Aluno) and isinstance(aluno.cpf, str)):

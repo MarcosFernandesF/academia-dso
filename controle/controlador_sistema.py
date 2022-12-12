@@ -25,16 +25,6 @@ class ControladorSistema():
     def inicia(self):
         self.abre_tela_inicial()
 
-    def instancia_planos(self):
-        plano_mensal = self.__controlador_plano.cria_plano("Plano Mensal", "1 Mês", 119.90)
-        self.__controlador_plano.planos = plano_mensal
-
-        plano_semestral = self.__controlador_plano.cria_plano("Plano Semestral", "6 Meses", 109.90)
-        self.__controlador_plano.planos = plano_semestral
-
-        plano_anual = self.__controlador_plano.cria_plano("Plano Anual", "12 Meses", 99.90)
-        self.__controlador_plano.planos = plano_anual
-
     def cadastra_alunos(self):
         self.__controlador_aluno.abre_tela()
 
@@ -44,8 +34,8 @@ class ControladorSistema():
     def cadastra_grupoMuscular(self):
         self.__controlador_grupoMuscular.abre_tela_inicial()
     
-    def mostra_planos(self):
-        self.__controlador_plano.lista_planos()
+    def cadastra_planos(self):
+        self.__controlador_plano.abre_tela()
 
     def tela_aparelhos(self):
         self.__controlador_aparelhos.abre_tela_inicial()
@@ -71,7 +61,7 @@ class ControladorSistema():
             1: self.cadastra_alunos,
             2: self.cadastra_instrutor,
             3: self.cadastra_grupoMuscular,
-            4: self.mostra_planos,
+            4: self.cadastra_planos,
             5: self.tela_aparelhos,
             6: self.tela_exercicio,
             7: self.tela_treino,
